@@ -106,7 +106,7 @@ public class PlayerMovement : CharacterMovement {
 
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundMask))
             {
-                Debug.DrawLine(hit.point, hit.normal);
+                //Debug.DrawLine(hit.point, hit.normal);
 
                 Vector3 adjustedPosition = transform.position.ToIso();
                 Vector3 directionToHit = hit.point.ToIso() - adjustedPosition;
