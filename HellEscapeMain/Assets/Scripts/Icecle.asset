@@ -16,4 +16,4 @@ MonoBehaviour:
   skillLevel: 1
   skillDamage: 3
   skillNumber: 4
-  sprite: {fileID: 21300000, guid: 66d97c57ec530c84798a30b312b0f4e9, type: 3}
+  sprite: {fileID: 21300000, guid: ff4d1f854d3a93b459d1fe3734f92bc6, type: 3}
