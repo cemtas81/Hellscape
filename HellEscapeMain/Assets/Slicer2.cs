@@ -12,7 +12,7 @@ public class Slicer2 : MonoBehaviour,IUpgrade
     }
     void Update()
     {
-        transform.position = player.position;
+        transform.position = new Vector3(player.position.x,player.position.y+1.5f,player.position.z);
         transform.Rotate(Level*speed * Time.deltaTime * Vector3.up);
               
     }

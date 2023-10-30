@@ -142,6 +142,10 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 	{
 		weapon.Slash();
 	}
+	public void AttackEnd() 
+	{
+		weapon.attacking = false;
+	}
 	public void BoomerangShoot()
 	{
       
