@@ -1,16 +1,28 @@
+using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
+public enum PrefabType
+{
+    Prefab0 = 0,
+    Prefab1 = 1,
+    Prefab2 = 2,
+    Prefab3 = 3,
+    Prefab4 = 4,
+    Prefab5 = 5
+   
+}
 public class ObjectPooling2 : MonoBehaviour
 {
-    public static ObjectPooling2 SharedInstance;
+    public static ObjectPooling2 Shared;
     public Dictionary<GameObject, List<GameObject>> pooledObjects;
     public List<GameObject> objectsToPool;
     public List<int> amountToPool;
-
+  
     private void Awake()
     {
-        SharedInstance = this;
+        Shared = this;
     }
 
     private void Start()
@@ -28,12 +40,25 @@ public class ObjectPooling2 : MonoBehaviour
         }
     }
 
-    public GameObject GetPooledObject(GameObject prefab)
+    public GameObject GetPrefabByType(PrefabType type)
     {
-        int index = objectsToPool.IndexOf(prefab);
-        if (index == -1)
+        int index = (int)type;
+        if (index >= 0 && index < objectsToPool.Count)
         {
-            Debug.LogError("Prefab not found in the list of objects to pool.");
+            return objectsToPool[index];
+        }
+        else
+        {
+            Debug.LogError("Invalid PrefabType.");
+            return null;
+        }
+    }
+
+    public GameObject GetPooledObject(PrefabType type)
+    {
+        GameObject prefab = GetPrefabByType(type);
+        if (prefab == null)
+        {
             return null;
         }
 

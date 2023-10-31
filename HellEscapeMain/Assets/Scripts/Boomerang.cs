@@ -16,9 +16,9 @@ public class Boomerang : MonoBehaviour
     {
         go = false; //Set To Not Return Yet
         //player = GameObject.FindGameObjectWithTag("Player");
-        player = SharedVariables.hero;
+        player = SharedVariables.Instance.playa;
         //sword = GameObject.FindGameObjectWithTag("boomerang");
-        swordImage =SharedVariables.Sword;      
+        swordImage =SharedVariables.Instance.swordIm;      
         swordImage.enabled = false; //Turn Off The Mesh Render To Make The Weapon Invisible  
         itemToRotate = gameObject.transform.GetChild(0); //Find The Weapon That Is The Child Of The Empty Object                   
         //Adjust The Location Of The Player Accordingly, Here I Add To The Y position So That The Object Doesn't Go Too Low ...Also Pick A Location In Front Of The Player

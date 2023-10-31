@@ -18,21 +18,23 @@ public class BossCont2 : MonoBehaviour, IKillable
     private float probabilityupgrade = .5f;
     private ScreenController screenController;
    
-    private void Start()
+    private void OnEnable()
     {
-        player = GameObject.FindWithTag("Player").transform;
-        screenController = GameObject.FindObjectOfType<ScreenController>();
+        player = SharedVariables.Instance.playa.transform;
+        screenController = SharedVariables.Instance.screenCont;
         bossStatus = GetComponent<Status>();
         Parent = FindObjectOfType<MySolidSpawner>();
         bossAnimation = GetComponent<CharacterAnimation>();
         bossMovement = GetComponent<CharacterMovement>();
-      
+        Parent.BossHere = true;
         bossSlider.maxValue = bossStatus.initialHealth;
         screenController.ShowBossText();
         UpdateInterface();
-       
     }
-  
+    private void OnDisable()
+    {
+        Parent.BossHere = false;
+    }
     void FixedUpdate()
     {
 
@@ -47,10 +49,10 @@ public class BossCont2 : MonoBehaviour, IKillable
         if (distance > 60)
         {
             Parent.spawnedPrefabs.Remove(this.gameObject);
-            Destroy(gameObject);
-            //this.gameObject.SetActive(false);
+            //Destroy(gameObject);
+            this.gameObject.SetActive(false);
 
-            enabled = false;
+            //enabled = false;
         }
         //      else if (distance > 30) 
         //{
@@ -92,15 +94,21 @@ public class BossCont2 : MonoBehaviour, IKillable
 
     public void Die()
     {
-        Parent.BossHere = false;
-        Destroy(gameObject, 2);
+       
+        StartCoroutine(Dying());
+        //Destroy(gameObject, 2);
         bossAnimation.Die();
         bossMovement.Die();
         Instantiate(aidKitPrefab, transform.position, Quaternion.identity);
-        enabled = false;
+        //enabled = false;
         InstantiateUpgrade(probabilityupgrade);
     }
+    IEnumerator Dying()
+    {
+        yield return new WaitForSeconds(2);
+        this.gameObject.SetActive(false);
 
+    }
     public void BloodParticle(Vector3 position, Quaternion rotation)
     {
         Instantiate(bloodParticle, position, rotation);

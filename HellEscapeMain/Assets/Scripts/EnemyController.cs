@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour, IKillable
 	
 	[SerializeField] private AudioClip deathSound;
 	[SerializeField] private GameObject aidKit;
-	[SerializeField] private GameObject bloodParticle;
+	[SerializeField] private ParticleSystem bloodParticle;
 	//[SerializeField] private GameObject deadEnd;
 	
 	private Status enemyStatus;
@@ -26,20 +26,34 @@ public class EnemyController : MonoBehaviour, IKillable
     private MySolidSpawner Parent;
 	public DamageNumber numberPrefab;
 	private NavMeshAgent agent;
-    void Start () {
-	
-		enemyMovement = GetComponent<CharacterMovement>();
-		enemyAnimation = GetComponent<CharacterAnimation>();
-		enemyStatus = GetComponent<Status>();
-		screenController = SharedVariables.screenController_m;	
-		Parent = SharedVariables.Spawner;
-		player=SharedVariables.hero;	
+	private Collider coll;
+	private Rigidbody rb;
+	private void OnEnable()
+	{
+        enemyMovement = GetComponent<CharacterMovement>();
+        enemyAnimation = GetComponent<CharacterAnimation>();
+        enemyStatus = GetComponent<Status>();
+        screenController = SharedVariables.Instance.screenCont;
+        Parent = SharedVariables.Instance.spawner;
+        player = SharedVariables.Instance.playa;
+		coll=GetComponent<Collider>();
+		rb=GetComponent<Rigidbody>();
         //GetRandomEnemy();
-		Parent.spawnedPrefabs.Add(this.gameObject);
-		enabled = true;
-		agent = GetComponent<NavMeshAgent>();
-	}
-
+        Parent.spawnedPrefabs.Add(this.gameObject);		
+        agent = GetComponent<NavMeshAgent>();
+		if (agent!=null)
+		{
+            agent.enabled = true;
+        }
+		rb.isKinematic = false;
+		enemyStatus.health=enemyStatus.initialHealth;
+		coll.enabled = true;
+		
+    }
+	private void OnDisable()
+	{
+        Parent.spawnedPrefabs.Remove(this.gameObject);
+    }
 	void FixedUpdate () {
 
 		// get the distance between this enemy and the player
@@ -53,16 +67,16 @@ public class EnemyController : MonoBehaviour, IKillable
 		enemyAnimation.Movement(direction.magnitude*5);
         if (distance > 60)
         {
-            Parent.spawnedPrefabs.Remove(this.gameObject);
-            Destroy(gameObject);
-            //this.gameObject.SetActive(false);
             
-			enabled = false;
+			//Destroy(gameObject);
+			this.gameObject.SetActive(false);
+
+			//enabled = false;
         }
-  //      else if (distance > 30) 
-		//{
-		//	Rolling();
-		//} 
+		else if (distance > 30)
+		{
+			enemyMovement.Movement(transform.position);
+		}
 		else if (distance > 3f) 
 		{
 		
@@ -126,11 +140,12 @@ public class EnemyController : MonoBehaviour, IKillable
 	}
 
 	public void Die() {
-		Destroy(gameObject, 1.5f);
+		//Destroy(gameObject, 1.5f);
+		StartCoroutine(Dying());
 		enemyAnimation.Die();
 	    enemyMovement.Die();
-        enemyStatus.speed= 0;
-        enabled = false;
+        //enemyStatus.speed= 0;
+        //enabled = false;
 		if (agent!=null)
 		{
             agent.enabled = false;
@@ -138,47 +153,54 @@ public class EnemyController : MonoBehaviour, IKillable
         screenController.UpdateDeadZombiesCount();
         //EnemySpawner.DecreaseAliveEnemiesAmount();
         Parent.Spawn3(this.transform.position);
-        Parent.spawnedPrefabs.Remove(this.gameObject);
+        
         // plays the death sound
         AudioController.instance.PlayOneShot(deathSound);
 		InstantiateAidKit (probabilityAidKit);
 		//Bloody(this.transform.position, Quaternion.identity);
 	}
-   
+   IEnumerator Dying()
+	{
+		yield return new WaitForSeconds(1.5f);
+		this.gameObject.SetActive(false);
+	}
     public void BloodParticle(Vector3 position, Quaternion rotation) {
-		Instantiate(bloodParticle, position, rotation);
+		//Instantiate(bloodParticle, position, rotation);
+		bloodParticle.transform.SetPositionAndRotation(position, rotation);
+		bloodParticle.Play();
 	} 
-	//public void Bloody(Vector3 position, Quaternion rotation)
-	//{
-	//	Instantiate(deadEnd, position, rotation);
-	//}
+	
 
 	private void InstantiateAidKit (float probability) {
 		if (Random.value <= probability)
 			Instantiate(aidKit, transform.position, Quaternion.identity);
 	}
 
-	//private void Rolling () {
-	//	rollingCounter -= Time.deltaTime;
-	//	if (rollingCounter <= 0) {
-	//		randomPosition = GetRandomPosition();
-	//		rollingCounter += randomPositionTime + Random.Range(-1f, 1f);
-	//	}
+	private void Rolling()
+	{
+		rollingCounter -= Time.deltaTime;
+		if (rollingCounter <= 0)
+		{
+			randomPosition = GetRandomPosition();
+			rollingCounter += randomPositionTime + Random.Range(-1f, 1f);
+		}
 
-	//	bool closeEnough = Vector3.Distance(transform.position, randomPosition) <= 0.1;
-	//	if (!closeEnough) {
-	//		direction = randomPosition - transform.position;
-	//		enemyMovement.Movement(direction, enemyStatus.speed);
-	//	}
-	//}
+		bool closeEnough = Vector3.Distance(transform.position, randomPosition) <= 10;
+		if (!closeEnough)
+		{
+			direction = randomPosition - transform.position;
+			enemyMovement.Movement(direction, enemyStatus.speed);
+		}
+	}
 
-	//private Vector3 GetRandomPosition () {
-	//	Vector3 position = Random.insideUnitSphere * 10;
-	//	position += transform.position;
-	//	position.y = transform.position.y;
-	//	return position;
-	//}
-    void DamageN(float value, string st)
+	private Vector3 GetRandomPosition()
+	{
+		Vector3 position = Random.insideUnitSphere * 10;
+		position += transform.position;
+		position.y = transform.position.y;
+		return position;
+	}
+	void DamageN(float value, string st)
     {
 		DamageNumber damageNumber = numberPrefab.Spawn(transform.position + Vector3.up * value, st);
 	}

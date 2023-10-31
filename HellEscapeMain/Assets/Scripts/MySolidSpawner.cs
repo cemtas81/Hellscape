@@ -5,7 +5,7 @@ using DG.Tweening;
 public class MySolidSpawner : MonoBehaviour
 {
     // The prefabs to spawn
-    public GameObject[] prefabs;
+    //public GameObject[] prefabs;
     public float desiredCircleRadius;
     // The minimum and maximum number of prefabs to spawn
     public int minSpawnCount = 5;
@@ -20,7 +20,11 @@ public class MySolidSpawner : MonoBehaviour
     public float spawnInterval; 
     public float spawnIntervalBoss;  
     public bool BossHere;
-   
+    private ObjectPooling2 pool;
+    private void Awake()
+    {
+        pool = ObjectPooling2.Shared;
+    }
     void Start()
     {
         // Initialize the list of spawned prefabs
@@ -29,7 +33,8 @@ public class MySolidSpawner : MonoBehaviour
         // Start the spawn coroutine
         StartCoroutine(SpawnCoroutine());
         StartCoroutine(SpawnCoroutineBoss());
-       
+
+        Application.targetFrameRate = 60;
     }
 
     IEnumerator SpawnCoroutine()
@@ -46,9 +51,9 @@ public class MySolidSpawner : MonoBehaviour
                 int spawnCount = Random.Range(minSpawnCount, maxSpawnCount + 1);
                 for (int i = 0; i < spawnCount; i++)
                 {
-                    if (BossHere==false)
+                    if (!BossHere)
                     {
-                        Spawn4();
+                       Spawn4();
                     }               
                 }             
             }
@@ -58,7 +63,7 @@ public class MySolidSpawner : MonoBehaviour
     {
         while (true)
         {
-            if (BossHere == false)
+            if (!BossHere)
             {
                 yield return new WaitForSeconds(spawnIntervalBoss);
 
@@ -74,62 +79,84 @@ public class MySolidSpawner : MonoBehaviour
 
     public void Spawn3(Vector3 pos)
     {
+        //GameObject prefabToSpawn = ObjectPooler.SharedInstance.GetPooledObject();
+        GameObject prefabToSpawn;
+        float randomValue = Random.value;
+        if (randomValue <= 0.85f) // 85% probability
+        {
+            prefabToSpawn = pool.GetPooledObject(PrefabType.Prefab0);
+        }
+        else  // 15% probability
+        {
+            prefabToSpawn = pool.GetPooledObject(PrefabType.Prefab1);
+        }
+        if (prefabToSpawn == null) return;
 
-        GameObject prefabToSpawn = ObjectPooler.SharedInstance.GetPooledObject();
-        if (prefabToSpawn==null) return;      
-        prefabToSpawn.transform.SetPositionAndRotation(new Vector3(pos.x,1,pos.z), Quaternion.identity);
+        // Define the range for the random offset
+        float offsetRange = 0.5f;
+
+        // Generate a random offset
+        Vector3 offset = new(Random.Range(-offsetRange, offsetRange),
+                                     0, // no change on the y-axis
+                                     Random.Range(-offsetRange, offsetRange));
+
+        // Apply the offset to the spawn position
+        pos += offset;
+
+        // Set the position and rotation of the prefab
+        prefabToSpawn.transform.SetPositionAndRotation(new Vector3(pos.x, 1, pos.z), Quaternion.identity);
+
         // Enable the prefab
         prefabToSpawn.SetActive(true);
 
-        //Vector3 startPos = prefabToSpawn.transform.position;
-        //int height = 5;
-        //float duration = 0.3f;
-        //DOTween.To(() => 0, x =>
-        //{
-        //    float y = height * (x / duration - (x / duration) * (x / duration));
-        //    prefabToSpawn.transform.position = startPos + (movableObject.transform.position - startPos) * x / duration + new Vector3(0, y, 0);
-        //}, duration, duration)
-        //.SetEase(Ease.Linear)
-        //.Play();
+        float jumpDistance = 3f;
+        float jumpDuration = 0.5f;
 
+        // Calculate the target position for the jump
+        Vector3 jumpTarget = prefabToSpawn.transform.position + prefabToSpawn.transform.forward * jumpDistance;
+
+        // Make the prefab jump forward
+        prefabToSpawn.transform.DOMove(jumpTarget, jumpDuration);
     }
+
     public void Spawn4()
     {
+       
         GameObject prefab;
         float randomValue = Random.value;
-        if (randomValue <= nadide)
+        if (randomValue <= 0.60f) // 60% probability
         {
-            prefab = prefabs[0];  // the first prefab has a higher chance of spawning 
+            prefab = pool.GetPooledObject(PrefabType.Prefab2);
         }
-        else if (randomValue <= 0.95f)
+        else if (randomValue <= 0.9f) // 25% probability
         {
-            prefab = prefabs[1];  // the second prefab has a lower chance of spawning
+            prefab = pool.GetPooledObject(PrefabType.Prefab3);
         }
-        else
+        else if (randomValue <= 0.98f) // 10% probability
         {
-            prefab = prefabs[2];  // the third prefab has an even lower chance of spawning
+            prefab = pool.GetPooledObject(PrefabType.Prefab4);
         }
+        else // 5% probability
+        {
+            prefab = pool.GetPooledObject(PrefabType.Prefab2);
 
+        }
+        if (prefab == null) return;
         if (spawnedPrefabs.Count >= maxActivePrefabs)
         {
             return;
         }
         float angle = Random.Range(0f, 360f);
         float x = movableObject.transform.position.x + desiredCircleRadius * Mathf.Cos(angle);
-        float y = movableObject.transform.position.y;
         float z = movableObject.transform.position.z + desiredCircleRadius * Mathf.Sin(angle);
         Vector3 position = new Vector3(x, 0, z);
-        
-        prefab.transform.SetPositionAndRotation(position, Quaternion.identity);
-         
-        Instantiate(prefab);
-       
-
+        prefab.transform.SetPositionAndRotation(position, Quaternion.Euler(0, angle, 0));
+        prefab.SetActive(true);
     }
     public void BossSpawn()
     {
-        int prefabIndex = Random.Range(0, 2); // choose either 0 or 1
-        GameObject prefab = prefabs[prefabIndex + 3]; // add 4 to get prefab 4 or 5
+        
+        GameObject prefab = pool.GetPooledObject(PrefabType.Prefab5); 
 
         float angle = Random.Range(0f, 360f);
         float x = movableObject.transform.position.x + desiredCircleRadius * Mathf.Cos(angle);
@@ -137,7 +164,7 @@ public class MySolidSpawner : MonoBehaviour
         float z = movableObject.transform.position.z + desiredCircleRadius * Mathf.Sin(angle);
         Vector3 position = new Vector3(x, 0, z);
         prefab.transform.SetPositionAndRotation(position, Quaternion.identity);
-        Instantiate(prefab);
+        prefab.SetActive(true);
     }
 }
 

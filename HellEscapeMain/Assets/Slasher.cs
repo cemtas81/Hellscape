@@ -7,7 +7,8 @@ public class Slasher : MonoBehaviour
     Vector3 locationInFrontOfPlayer;
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        
+        player = SharedVariables.Instance.playa;
         locationInFrontOfPlayer =player.transform.position + player.transform.forward * 10f;
         Destroy(transform.parent.gameObject,0.3f);
     }

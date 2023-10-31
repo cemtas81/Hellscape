@@ -59,6 +59,11 @@ PrefabInstance:
       propertyPath: ColorModule.gradient.minGradient.key0.a
       value: 0.5686275
       objectReference: {fileID: 0}
+    - target: {fileID: 8145998356493815701, guid: 01a0619cf5aa0ae4c8d33fd79ee6d522,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8145998357020819155, guid: 01a0619cf5aa0ae4c8d33fd79ee6d522,
         type: 3}
       propertyPath: m_Enabled
