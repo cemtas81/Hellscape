@@ -91,7 +91,7 @@ public class MySolidSpawner : MonoBehaviour
         //}, duration, duration)
         //.SetEase(Ease.Linear)
         //.Play();
-        
+
     }
     public void Spawn4()
     {
