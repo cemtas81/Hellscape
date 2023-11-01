@@ -21,27 +21,30 @@ public class MySolidSpawner : MonoBehaviour
     public float spawnIntervalBoss;  
     public bool BossHere;
     private ObjectPooling2 pool;
-    private void Awake()
-    {
-        pool = ObjectPooling2.Shared;
-    }
+
     void Start()
     {
+        pool = ObjectPooling2.Shared;
         // Initialize the list of spawned prefabs
         spawnedPrefabs = new List<GameObject>();
-        Spawn4();
+        //Spawn4();
         // Start the spawn coroutine
         StartCoroutine(SpawnCoroutine());
         StartCoroutine(SpawnCoroutineBoss());
-
+        StartCoroutine(InitialSpawn());
         Application.targetFrameRate = 60;
     }
+    IEnumerator InitialSpawn()
+    {
+        // Wait until the end of frame to ensure ObjectPooling2 has initialized
+        yield return new WaitForSeconds(2);
 
+        // Then spawn initial items
+        Spawn4();
+    }
     IEnumerator SpawnCoroutine()
     {
-        
-       
-            // Loop indefinitely
+          // Loop indefinitely
             while (true)
             {
                 // Wait for the specified interval
@@ -76,19 +79,54 @@ public class MySolidSpawner : MonoBehaviour
             }
         }
     }
+    public void Spawn2(Vector3 pos)
+    {
+        GameObject spawnobj=pool.GetPooledObject(PrefabType.Prefab0);
+        float offsetRange = 0.5f;
 
+        // Generate a random offset
+        Vector3 offset = new(Random.Range(-offsetRange, offsetRange),
+                                     0, // no change on the y-axis
+                                     Random.Range(-offsetRange, offsetRange));
+
+        // Apply the offset to the spawn position
+        pos += offset;
+
+        // Set the position and rotation of the prefab
+        spawnobj.transform.SetPositionAndRotation(new Vector3(pos.x, 1, pos.z), Quaternion.identity);
+
+        // Enable the prefab
+        spawnobj.SetActive(true);
+
+        float jumpDistance = 3f;
+        float jumpDuration = 0.5f;
+
+        // Calculate the target position for the jump
+        Vector3 jumpTarget = spawnobj.transform.position + spawnobj.transform.forward * jumpDistance;
+
+        // Make the prefab jump forward
+        spawnobj.transform.DOMove(jumpTarget, jumpDuration);
+
+    }
     public void Spawn3(Vector3 pos)
     {
-        //GameObject prefabToSpawn = ObjectPooler.SharedInstance.GetPooledObject();
-        GameObject prefabToSpawn;
+        GameObject prefabToSpawn = null; // Default to null (i.e., spawn nothing)
         float randomValue = Random.value;
-        if (randomValue <= 0.85f) // 85% probability
+        if (randomValue <= 0.78f) // 78% probability
+        {
+            Debug.Log("No spawn");
+        }
+        else if (randomValue <= 0.93f) // Next 15% probability
         {
             prefabToSpawn = pool.GetPooledObject(PrefabType.Prefab0);
         }
-        else  // 15% probability
+        else if (randomValue <= 0.99f) // Next 6% probability
         {
             prefabToSpawn = pool.GetPooledObject(PrefabType.Prefab1);
+        }
+        else // Remaining 1% probability
+        {
+            prefabToSpawn = pool.GetPooledObject(PrefabType.Prefab6);
         }
         if (prefabToSpawn == null) return;
 

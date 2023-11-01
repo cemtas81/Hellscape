@@ -22,7 +22,7 @@ public class Mining : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
-            Parent.Spawn3(this.transform.position);
+            Parent.Spawn2(this.transform.position);
             // Scale up
             transform.DOScale(1 * scaleAmount, scaleDuration)
             // Once the scaling up is complete, scale down to the original scale

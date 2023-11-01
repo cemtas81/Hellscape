@@ -18,6 +18,7 @@ public class Boomerang : MonoBehaviour
         //player = GameObject.FindGameObjectWithTag("Player");
         player = SharedVariables.Instance.playa;
         //sword = GameObject.FindGameObjectWithTag("boomerang");
+        sword=SharedVariables.Instance.sword;
         swordImage =SharedVariables.Instance.swordIm;      
         swordImage.enabled = false; //Turn Off The Mesh Render To Make The Weapon Invisible  
         itemToRotate = gameObject.transform.GetChild(0); //Find The Weapon That Is The Child Of The Empty Object                   

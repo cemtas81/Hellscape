@@ -1,18 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 
+using System.Collections.Generic;
 using UnityEngine;
 
-public enum PrefabType
-{
-    Prefab0 = 0,
-    Prefab1 = 1,
-    Prefab2 = 2,
-    Prefab3 = 3,
-    Prefab4 = 4,
-    Prefab5 = 5
-   
-}
+
 public class ObjectPooling2 : MonoBehaviour
 {
     public static ObjectPooling2 Shared;

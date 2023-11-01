@@ -9,7 +9,7 @@ public class Slasher : MonoBehaviour
     {
         
         player = SharedVariables.Instance.playa;
-        locationInFrontOfPlayer =player.transform.position + player.transform.forward * 10f;
+        locationInFrontOfPlayer =player.transform.position + player.transform.forward * 10f+Vector3.up*1.5f;
         Destroy(transform.parent.gameObject,0.3f);
     }
     private void Update()

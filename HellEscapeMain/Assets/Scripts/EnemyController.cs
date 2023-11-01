@@ -132,11 +132,11 @@ public class EnemyController : MonoBehaviour, IKillable
 
 		if (enemyStatus.health <= 0)
 		{
-			DamageN(.5f, "execution");
+			DamageN(.5f, "100");
 			Die();
 		}
 		else
-			DamageN(1.5f, "hit");
+			DamageN(1.5f, "50");
 	}
 
 	public void Die() {

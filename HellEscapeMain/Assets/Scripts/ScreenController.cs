@@ -9,7 +9,7 @@ public class ScreenController : MonoBehaviour {
 	[SerializeField] private Slider healthSlider,coinSlider,aggroSlider;
 	[SerializeField] private GameObject gameOverPanel,pausePanel,sagH,solH;	
 	[SerializeField] private Text deadZombiesText,bossText,maxScoreText,scoreText,comboText;
-	public GameObject upgradePanel;
+	public GameObject upgradePanel, newWeapon,weapon1,lastWeapon;
 	public int weaponLevel;
 	private float maxScore,lastKillTime;
 	private int deadZombiesCount;
@@ -17,7 +17,7 @@ public class ScreenController : MonoBehaviour {
     private PlayerController playerController;
     [SerializeField] private int comboCount;
     [SerializeField] private float comboTimeLimit =.5f;
-
+	
     private void Awake()
 	{
 		if (PlayerPrefs.GetInt("Hand")==0)
@@ -99,7 +99,22 @@ public class ScreenController : MonoBehaviour {
         }
 		
     }
+	public void NewWeapon()
+	{
+        if (newWeapon.activeSelf) // if weapon is active
+        {
+            newWeapon.SetActive(false);  // deactivate it
+            Time.timeScale = 1; // resume game time
+			lastWeapon.SetActive(false);
+			weapon1.SetActive(true);
+        }
+        else  // if weapon is not active
+        {
+            newWeapon.SetActive(true); // activate it
+            Time.timeScale = 0; // pause game time
+        }
 
+    }
 	public void Restart () 
 	{
 		//SceneManager.LoadScene("Game");

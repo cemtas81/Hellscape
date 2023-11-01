@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4304344109111182299}
-  - component: {fileID: 4304344109111182292}
+  - component: {fileID: 1245488971}
   m_Layer: 0
   m_Name: Pooler
   m_TagString: Untagged
@@ -27,11 +27,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4304344109111182292
+--- !u!114 &1245488971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,10 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4304344109111182293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f9a11dfd53b3204dba3b16f44b92c25, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ddb608db1d8c8c48a4e227be3b3e060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledObjects: []
-  objectToPool: {fileID: 6587295368435362768, guid: 8a023d651718fe144bf9bec4366dc365,
-    type: 3}
-  amountToPool: 150
+  objectsToPool:
+  - {fileID: 6587295368435362768, guid: 8a023d651718fe144bf9bec4366dc365, type: 3}
+  - {fileID: 6587295368435362768, guid: ae42c213f89ee91459115982f33203db, type: 3}
+  - {fileID: 1063500868937916, guid: b46460f1bbbc12748b60dcdabbcb01e5, type: 3}
+  - {fileID: 1063500868937916, guid: 6b775fb214bd221439890cc84becfab9, type: 3}
+  - {fileID: 1063500868937916, guid: 2dd7c269d3924e245b0a42907e66d3d9, type: 3}
+  - {fileID: 1063500868937916, guid: b3278ab1e5dcc2749b40c728866c02f9, type: 3}
+  amountToPool: 550000000f0000007800000032000000140000000a000000
