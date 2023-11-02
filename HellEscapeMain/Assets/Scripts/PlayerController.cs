@@ -199,12 +199,4 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
     }
 
 }
-public static class Helpers
 
-{
-
-    private static Matrix4x4 _isoMatrix = Matrix4x4.Rotate(Quaternion.Euler(30, 117, 0));
-	
-    public static Vector3 ToIso(this Vector3 input) => _isoMatrix.MultiplyPoint3x4(input);
-    
-}

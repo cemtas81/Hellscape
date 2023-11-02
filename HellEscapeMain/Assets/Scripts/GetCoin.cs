@@ -1,4 +1,3 @@
-//using PlayerNameSpace;
 
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class GetCoin : MonoBehaviour
     private ScreenController slider;
     private void Start()
     {
-        slider =FindObjectOfType<ScreenController>();
+        slider =SharedVariables.Instance.screenCont;
     }
     private void OnTriggerEnter(Collider other)
     {

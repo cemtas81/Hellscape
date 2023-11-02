@@ -11,29 +11,11 @@ public class WeaponController : MonoBehaviour, IUpgrade {
 	public float shootInterval;
     public int Level;
     public MeshRenderer swordImage;
-
-    //void Update () 
-    //{
-    //	instantiates a new projectile each mouse click
-    //	if (Input.GetButtonDown("Fire1"))
-    //	{
-    //		Instantiate(projectile, shootPosition.position, shootPosition.rotation);
-
-    //		// plays the shot sound
-    //		AudioController.instance.PlayOneShot(shotSound);
-    //	}
-    //}
-    //public void Shoot()
-    //{
-    //       Instantiate(projectile, shootPosition.position, shootPosition.rotation);
-
-    //	// plays the shot sound
-    //	AudioController.instance.PlayOneShot(shotSound);
-    //}
     private void Awake()
     {
         swordImage = Sword.GetComponent<MeshRenderer>();
     }
+   
     private void OnEnable()
     {
         

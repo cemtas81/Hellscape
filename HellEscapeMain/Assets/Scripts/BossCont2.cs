@@ -17,19 +17,24 @@ public class BossCont2 : MonoBehaviour, IKillable
     private CharacterMovement bossMovement;
     private float probabilityupgrade = .5f;
     private ScreenController screenController;
-   
+    private Collider coll;
     private void OnEnable()
     {
+        coll = GetComponent<Collider>();
         player = SharedVariables.Instance.playa.transform;
         screenController = SharedVariables.Instance.screenCont;
         bossStatus = GetComponent<Status>();
-        Parent = FindObjectOfType<MySolidSpawner>();
+        Parent = SharedVariables.Instance.spawner;
         bossAnimation = GetComponent<CharacterAnimation>();
         bossMovement = GetComponent<CharacterMovement>();
-        Parent.BossHere = true;
-        bossSlider.maxValue = bossStatus.initialHealth;
+        Parent.BossHere = true;       
         screenController.ShowBossText();
         UpdateInterface();
+        bossStatus.health = bossStatus.initialHealth;
+        bossSlider.maxValue = bossStatus.initialHealth;
+        bossSlider.value = bossStatus.health;
+        sliderImage.color = Color.green;
+        coll.enabled = true;
     }
     private void OnDisable()
     {
@@ -99,7 +104,7 @@ public class BossCont2 : MonoBehaviour, IKillable
         //Destroy(gameObject, 2);
         bossAnimation.Die();
         bossMovement.Die();
-        Instantiate(aidKitPrefab, transform.position, Quaternion.identity);
+        Instantiate(aidKitPrefab, transform.position+Vector3.up, Quaternion.identity);
         //enabled = false;
         InstantiateUpgrade(probabilityupgrade);
     }

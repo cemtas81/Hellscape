@@ -7,16 +7,18 @@ using UnityEngine.SceneManagement;
 public class ScreenController : MonoBehaviour {
 
 	[SerializeField] private Slider healthSlider,coinSlider,aggroSlider;
+	public Slider manaSlider;
 	[SerializeField] private GameObject gameOverPanel,pausePanel,sagH,solH;	
-	[SerializeField] private Text deadZombiesText,bossText,maxScoreText,scoreText,comboText;
+	[SerializeField] private Text deadZombiesText,bossText,maxScoreText,scoreText,comboText,coinText;
 	public GameObject upgradePanel, newWeapon,weapon1,lastWeapon;
 	public int weaponLevel;
 	private float maxScore,lastKillTime;
-	private int deadZombiesCount;
+	private int deadZombiesCount,coins;
 	MyController control;
     private PlayerController playerController;
     [SerializeField] private int comboCount;
     [SerializeField] private float comboTimeLimit =.5f;
+	
 	
     private void Awake()
 	{
@@ -56,18 +58,25 @@ public class ScreenController : MonoBehaviour {
 	public void UpdateHealthSlider () {
 		healthSlider.value = playerController.playerStatus.health;
 	}
+	public void UpdateManaSlider (float cost) 
+	{
+		
+        manaSlider.value += cost;
+	
+	}
 	public void UpdateCoinSlider(int coin)
 	{
-		coinSlider.value += coin / (1 + weaponLevel);
+		//coinSlider.value += coin / (1 + weaponLevel);
 
-		if (coinSlider.value >= 100)
-		{
-			weaponLevel++;
-			//playerController.Upgrade(uP.recentWeapon.skillLevel);
-			upgradePanel.SetActive(true);
-			coinSlider.value = 0;
-        }
-	
+		//if (coinSlider.value >= 100)
+		//{
+		//	weaponLevel++;
+		//	//playerController.Upgrade(uP.recentWeapon.skillLevel);
+		//	upgradePanel.SetActive(true);
+		//	coinSlider.value = 0;
+		//      }
+		coins += coin;
+		coinText.text = coins.ToString();
 	}
 	
     public void GameOver () {

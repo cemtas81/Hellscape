@@ -173,7 +173,7 @@ public class EnemyController : MonoBehaviour, IKillable
 
 	private void InstantiateAidKit (float probability) {
 		if (Random.value <= probability)
-			Instantiate(aidKit, transform.position, Quaternion.identity);
+			Instantiate(aidKit, transform.position+Vector3.up, Quaternion.identity);
 	}
 
 	private void Rolling()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainWeapon :MonoBehaviour
 {
     //public float interval = 1.0f;
-    public GameObject weapon;
+    public GameObject weapon, spell1,spell2,spell3;
     [SerializeField] private AudioClip shotSound;
     private Animator ani;
     private MyController myController1;
@@ -13,6 +13,7 @@ public class MainWeapon :MonoBehaviour
     float timer;
     public bool attacking;
     private Gamepad gamepad;
+    
     private void Awake()
     {
       
@@ -27,6 +28,42 @@ public class MainWeapon :MonoBehaviour
         {
             Attack();
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            DoSpell1();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            DoSpell2();
+        } 
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            DoSpell3();
+        }
+    }
+    void DoSpell1()
+    {
+        if (!spell1.activeInHierarchy)
+        {
+            spell1.SetActive(true);
+        }
+       
+    }
+    void DoSpell2()
+    {
+        if (!spell2.activeInHierarchy)
+        {
+            spell2.SetActive(true);
+        }
+       
+    }  
+    void DoSpell3()
+    {
+        if (!spell3.activeInHierarchy)
+        {
+            spell3.SetActive(true);
+        }
+       
     }
     void Attack()
     {

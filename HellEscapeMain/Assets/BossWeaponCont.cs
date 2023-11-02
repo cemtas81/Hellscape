@@ -13,8 +13,12 @@ public class BossWeaponCont : MonoBehaviour
     private void Start()
     {
         playerAnimation = GetComponentInParent<CharacterAnimation>();
-        StartCoroutine(ShootContinuously());
+      
        
+    }
+    private void OnEnable()
+    {
+        StartCoroutine(ShootContinuously());
     }
     private IEnumerator ShootContinuously()
     {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6587295368434268112}
   - component: {fileID: 6587295368433169680}
   - component: {fileID: -6000281350852719113}
-  - component: {fileID: -2622041396694214630}
+  - component: {fileID: 812921230041012698}
   m_Layer: 0
   m_Name: ManaCoin
   m_TagString: Untagged
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 25, y: 25, z: 25}
   m_Center: {x: 0.42538166, y: 0.493685, z: -0.008249283}
---- !u!114 &-2622041396694214630
+--- !u!114 &812921230041012698
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,6 +107,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6587295368435362768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee3054bedb94c5644b6b068867f3992b, type: 3}
+  m_Script: {fileID: 11500000, guid: 11127493504f4134b8bb365ce86a49bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

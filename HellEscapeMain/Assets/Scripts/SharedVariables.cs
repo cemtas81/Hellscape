@@ -56,23 +56,23 @@ public class SharedVariables : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
             SceneManager.LoadScene(1);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if (Input.GetKeyDown(KeyCode.F5))
         {
             SceneManager.LoadScene(0);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.F2))
         {
             SceneManager.LoadScene(2);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.F3))
         {
             SceneManager.LoadScene(3);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        if (Input.GetKeyDown(KeyCode.F4))
         {
             SceneManager.LoadScene(4);
         }
@@ -111,4 +111,14 @@ public class SharedVariables : MonoBehaviour
         //ammoHold = GameObject.FindGameObjectWithTag("AmmoHold").GetComponent<MeshRenderer>();
         //GunShots = GameObject.FindGameObjectWithTag("EnemyGunShots").GetComponent<AudioSource>();
     }
+
+}
+public static class Helpers
+
+{
+
+    private static Matrix4x4 _isoMatrix = Matrix4x4.Rotate(Quaternion.Euler(30, 117, 0));
+
+    public static Vector3 ToIso(this Vector3 input) => _isoMatrix.MultiplyPoint3x4(input);
+
 }
