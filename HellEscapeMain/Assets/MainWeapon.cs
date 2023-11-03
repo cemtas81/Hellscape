@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainWeapon :MonoBehaviour
 {
     //public float interval = 1.0f;
-    public GameObject weapon, spell1,spell2,spell3;
+    public GameObject weapon, spell1,spell2,spell3,charSkill;
     [SerializeField] private AudioClip shotSound;
     private Animator ani;
     private MyController myController1;
@@ -39,7 +39,18 @@ public class MainWeapon :MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             DoSpell3();
+        } 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OpenCharSkill();
         }
+       
+    }
+           
+          
+    void OpenCharSkill()
+    {
+        charSkill.SetActive(!charSkill.activeSelf);
     }
     void DoSpell1()
     {
