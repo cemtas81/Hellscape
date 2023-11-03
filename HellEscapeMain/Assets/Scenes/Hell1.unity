@@ -8200,6 +8200,12 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &382164666 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1317573776615807405, guid: 7ced8357a68b53f44b3232f37d2a0de1,
+    type: 3}
+  m_PrefabInstance: {fileID: 8354799180879800478}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &389080888
 GameObject:
   m_ObjectHideFlags: 0
@@ -40650,7 +40656,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 357410730}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1964412936
 MonoBehaviour:
@@ -40665,8 +40671,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObject: {fileID: 1534192486}
-  activeDuration: 5
-  inactiveDuration: 6
+  activeDuration: 8
+  inactiveDuration: 5
   player: {fileID: 1307532400}
   Level: 0
 --- !u!1 &1974092060
@@ -65866,6 +65872,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1055991614, guid: 7ced8357a68b53f44b3232f37d2a0de1, type: 3}
+      propertyPath: targetObject
+      value: 
+      objectReference: {fileID: 382164666}
     - target: {fileID: 1322126141, guid: 7ced8357a68b53f44b3232f37d2a0de1, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -66345,6 +66355,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 563507772555569465, guid: 7ced8357a68b53f44b3232f37d2a0de1,
+        type: 3}
+      propertyPath: spell1
+      value: 
+      objectReference: {fileID: 1964412934}
     - target: {fileID: 563507772555569467, guid: 7ced8357a68b53f44b3232f37d2a0de1,
         type: 3}
       propertyPath: m_Layer
@@ -66590,6 +66605,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1317573776615807410, guid: 7ced8357a68b53f44b3232f37d2a0de1,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1307532400}
     - target: {fileID: 1336703428245701889, guid: 7ced8357a68b53f44b3232f37d2a0de1,
         type: 3}
       propertyPath: m_Layer
@@ -69845,6 +69865,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6737837513402319481, guid: 7ced8357a68b53f44b3232f37d2a0de1,
+        type: 3}
+      propertyPath: maxSpawnCount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6737837513402319481, guid: 7ced8357a68b53f44b3232f37d2a0de1,
+        type: 3}
+      propertyPath: minSpawnCount
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6737837513402319481, guid: 7ced8357a68b53f44b3232f37d2a0de1,
+        type: 3}
+      propertyPath: maxActivePrefabs
+      value: 201
       objectReference: {fileID: 0}
     - target: {fileID: 6737837513406420393, guid: 7ced8357a68b53f44b3232f37d2a0de1,
         type: 3}
@@ -73744,7 +73779,7 @@ PrefabInstance:
     - target: {fileID: 8780514970331142625, guid: 7ced8357a68b53f44b3232f37d2a0de1,
         type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8827224661243166428, guid: 7ced8357a68b53f44b3232f37d2a0de1,
         type: 3}

@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObject: {fileID: 6852784792500875247}
-  activeDuration: 3
-  inactiveDuration: 8
+  activeDuration: 8
+  inactiveDuration: 5
   player: {fileID: 0}
   Level: 0
 --- !u!1 &489473276722146213
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObject: {fileID: 3646818983811501414}
-  activeDuration: 5
+  activeDuration: 8
   inactiveDuration: 5
   player: {fileID: 0}
   Level: 0
