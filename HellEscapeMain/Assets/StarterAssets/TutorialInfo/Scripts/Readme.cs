@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-
+[Serializable]
 public class Readme : ScriptableObject {
 	public Texture2D icon;
 	public string title;

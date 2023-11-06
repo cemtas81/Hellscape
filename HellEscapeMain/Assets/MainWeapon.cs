@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainWeapon :MonoBehaviour
 {
     //public float interval = 1.0f;
-    public GameObject weapon, spell1,spell2,spell3,charSkill;
+    public GameObject weapon, spell1,spell2,spell3,charSkill,skillTree;
     [SerializeField] private AudioClip shotSound;
     private Animator ani;
     private MyController myController1;
@@ -13,7 +13,7 @@ public class MainWeapon :MonoBehaviour
     float timer;
     public bool attacking;
     private Gamepad gamepad;
-    
+    public KeyCode key;
     private void Awake()
     {
       
@@ -44,10 +44,30 @@ public class MainWeapon :MonoBehaviour
         {
             OpenCharSkill();
         }
-       
+        if (Input.GetKeyDown(key))
+        {
+            NewSkillTree();
+        }
+
     }
-           
+    void NewSkillTree()
+    {
+
+        if (skillTree.activeInHierarchy)
+        {
+            skillTree.SetActive(false);
           
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            skillTree.SetActive(true);
+            
+            Time.timeScale = 0f;
+        }
+
+    }
+
     void OpenCharSkill()
     {
         charSkill.SetActive(!charSkill.activeSelf);

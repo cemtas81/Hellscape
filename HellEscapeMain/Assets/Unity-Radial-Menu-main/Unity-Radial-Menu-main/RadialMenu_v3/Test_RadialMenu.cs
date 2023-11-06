@@ -24,6 +24,7 @@ namespace Rito.RadialMenu_v3.Test
         private int secili;
         public GameObject PauseP;
         Vector2 mover;
+        CanvasGroup canvas;
         private void Awake()
         {
             myController=new MyController();
@@ -45,7 +46,7 @@ namespace Rito.RadialMenu_v3.Test
         private void Start()
         {
             radialMenu.SetPieceImageSprites(sprites);
-            
+            canvas=radialMenu.GetComponent<CanvasGroup>();
         }
          public void Choose()
         {
@@ -113,6 +114,10 @@ namespace Rito.RadialMenu_v3.Test
                         playerController.Spell(selected);
                         //SecimA();
                     }
+                    //if (Input.GetKeyDown(key))
+                    //{
+                    //    NewSkillTree();
+                    //}
 
                 }
             }
@@ -121,6 +126,23 @@ namespace Rito.RadialMenu_v3.Test
                 radialMenu.gameObject.SetActive(false);
             }
                 
+        }
+        void NewSkillTree()
+        {
+         
+            if (canvas.alpha == 1f)
+            {
+                radialMenu.gameObject.SetActive(false);
+                canvas.alpha = 0f; // if canvas alpha is 1, set it to 0
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                radialMenu.gameObject.SetActive(true);
+                canvas.alpha = 1f; // if canvas alpha is 0 (or any value other than 1), set it to 1
+                Time.timeScale = 0f;
+            }
+
         }
       void SecimA()
         {

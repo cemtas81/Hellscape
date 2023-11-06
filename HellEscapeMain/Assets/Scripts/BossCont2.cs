@@ -18,6 +18,7 @@ public class BossCont2 : MonoBehaviour, IKillable
     private float probabilityupgrade = .5f;
     private ScreenController screenController;
     private Collider coll;
+    private bool dead;
     private void OnEnable()
     {
         coll = GetComponent<Collider>();
@@ -35,6 +36,7 @@ public class BossCont2 : MonoBehaviour, IKillable
         bossSlider.value = bossStatus.health;
         sliderImage.color = Color.green;
         coll.enabled = true;
+        dead = false;
     }
     private void OnDisable()
     {
@@ -42,44 +44,47 @@ public class BossCont2 : MonoBehaviour, IKillable
     }
     void FixedUpdate()
     {
-
-        // get the distance between this enemy and the player
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-
-        if (direction!=Vector3.zero)
-		{
-            bossMovement.Rotation(direction);
-        }
-        bossAnimation.Movement(direction.magnitude * 5);
-        if (distance > 60)
+        if (!dead)
         {
-            Parent.spawnedPrefabs.Remove(this.gameObject);
-            //Destroy(gameObject);
-            this.gameObject.SetActive(false);
+            // get the distance between this enemy and the player
+            float distance = Vector3.Distance(transform.position, player.transform.position);
 
-            //enabled = false;
-        }
-        //      else if (distance > 30) 
-        //{
-        //	Rolling();
-        //} 
-        else if (distance > 3.5f)
-        {
-            
-            // the distance between the enemy and the player
-            direction = player.transform.position - transform.position;
-  
-            bossMovement.Movement(direction, bossStatus.speed);
+            if (direction != Vector3.zero)
+            {
+                bossMovement.Rotation(direction);
+            }
+            bossAnimation.Movement(direction.magnitude * 5);
+            if (distance > 60)
+            {
+                Parent.spawnedPrefabs.Remove(this.gameObject);
+                //Destroy(gameObject);
+                this.gameObject.SetActive(false);
 
-            // if they're not colliding the Attacking animation is off
-            bossAnimation.Attack(false);
+                //enabled = false;
+            }
+            //      else if (distance > 30) 
+            //{
+            //	Rolling();
+            //} 
+            else if (distance > 3.5f)
+            {
+
+                // the distance between the enemy and the player
+                direction = player.transform.position - transform.position;
+
+                bossMovement.Movement(direction, bossStatus.speed);
+
+                // if they're not colliding the Attacking animation is off
+                bossAnimation.Attack(false);
+            }
+            else
+            {
+                direction = player.transform.position - transform.position;
+                // otherwise, the Attacking animation is on
+                bossAnimation.Attack(true);
+            }
         }
-        else
-        {
-            direction = player.transform.position - transform.position;
-            // otherwise, the Attacking animation is on
-            bossAnimation.Attack(true);
-        }
+       
     }
 
     private void AttackPlayer()
@@ -99,7 +104,7 @@ public class BossCont2 : MonoBehaviour, IKillable
 
     public void Die()
     {
-       
+        dead = true;
         StartCoroutine(Dying());
         //Destroy(gameObject, 2);
         bossAnimation.Die();
