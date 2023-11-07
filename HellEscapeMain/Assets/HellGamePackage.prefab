@@ -103757,6 +103757,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3347210348801504303}
     m_Modifications:
+    - target: {fileID: 502109648, guid: 71b4170409c40d94baa94d11bb31d352, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155245283, guid: 71b4170409c40d94baa94d11bb31d352, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1764668967, guid: 71b4170409c40d94baa94d11bb31d352, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1824870661, guid: 71b4170409c40d94baa94d11bb31d352, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1953115123, guid: 71b4170409c40d94baa94d11bb31d352, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 397805758452101169, guid: 71b4170409c40d94baa94d11bb31d352,
         type: 3}
       propertyPath: m_Enabled
@@ -103886,6 +103906,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6737837513675370879, guid: 71b4170409c40d94baa94d11bb31d352,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71b4170409c40d94baa94d11bb31d352, type: 3}
@@ -105066,6 +105091,28 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3347210348801504303}
     m_Modifications:
+    - target: {fileID: 278012244, guid: f6269a18c0287664eb6fded4e5627daf, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1636013712, guid: f6269a18c0287664eb6fded4e5627daf, type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1669007035, guid: f6269a18c0287664eb6fded4e5627daf, type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2202063468234250625, guid: f6269a18c0287664eb6fded4e5627daf,
+        type: 3}
+      propertyPath: touchZoneOutputEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4457954431373287173, guid: f6269a18c0287664eb6fded4e5627daf,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6675964785693828138, guid: f6269a18c0287664eb6fded4e5627daf,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -105100,6 +105147,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6675964786611210188, guid: f6269a18c0287664eb6fded4e5627daf,
+        type: 3}
+      propertyPath: joystickOutputEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6675964787127510906, guid: f6269a18c0287664eb6fded4e5627daf,
         type: 3}

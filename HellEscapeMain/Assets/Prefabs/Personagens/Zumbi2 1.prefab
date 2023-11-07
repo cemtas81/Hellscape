@@ -143,6 +143,7 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: e21dd81695caab5499b47b785a6960d5, type: 3}
   aidKit: {fileID: 1060151288946202, guid: 6150c6f66b7034ec5b3672478195682a, type: 3}
   bloodParticle: {fileID: 1824713313622334221}
+  outLine: {fileID: 6158390520555277643}
   numberPrefab: {fileID: 1584410138532935668, guid: 1850c5272b1fc6b4783cc9c41329ef05,
     type: 3}
 --- !u!114 &114447579211330046
@@ -995,6 +996,26 @@ PrefabInstance:
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dd57956f3db51e42ac91fd505dcaa34, type: 3}
+--- !u!1 &1161564555636741882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4217256543277462532, guid: 3dd57956f3db51e42ac91fd505dcaa34,
+    type: 3}
+  m_PrefabInstance: {fileID: 3069203920469828350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6158390520555277643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161564555636741882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 2
+  eraseRenderer: 1
 --- !u!4 &8062204722503649764 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 3dd57956f3db51e42ac91fd505dcaa34,

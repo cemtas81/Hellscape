@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.AI;
+
 public class MySolidSpawner : MonoBehaviour
 {
     // The prefabs to spawn
@@ -148,7 +150,7 @@ public class MySolidSpawner : MonoBehaviour
         prefabToSpawn.SetActive(true);
 
         float jumpDistance = 3f;
-        float jumpDuration = 0.5f;
+        float jumpDuration = 1f;
 
         // Calculate the target position for the jump
         Vector3 jumpTarget = prefabToSpawn.transform.position + prefabToSpawn.transform.forward * jumpDistance;
@@ -188,8 +190,13 @@ public class MySolidSpawner : MonoBehaviour
         float x = movableObject.transform.position.x + desiredCircleRadius * Mathf.Cos(angle);
         float z = movableObject.transform.position.z + desiredCircleRadius * Mathf.Sin(angle);
         Vector3 position = new Vector3(x, 0, z);
-        prefab.transform.SetPositionAndRotation(position, Quaternion.Euler(0, angle, 0));
-        prefab.SetActive(true);
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(position, out hit, desiredCircleRadius, NavMesh.AllAreas))
+        {
+            prefab.transform.SetPositionAndRotation(hit.position, Quaternion.Euler(0, angle, 0));
+            prefab.SetActive(true);
+        }
+
     }
     public void BossSpawn()
     {

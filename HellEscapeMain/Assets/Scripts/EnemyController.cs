@@ -2,6 +2,7 @@
 using UnityEngine;
 using DamageNumbersPro;
 using UnityEngine.AI;
+using cakeslice;
 
 public class EnemyController : MonoBehaviour, IKillable 
 {
@@ -11,9 +12,9 @@ public class EnemyController : MonoBehaviour, IKillable
 	[SerializeField] private AudioClip deathSound;
 	[SerializeField] private GameObject aidKit;
 	[SerializeField] private ParticleSystem bloodParticle;
-	//[SerializeField] private GameObject deadEnd;
-	
-	private Status enemyStatus;
+    //[SerializeField] private GameObject deadEnd;
+    public Outline outLine;
+    private Status enemyStatus;
 	private GameObject player;
 	private CharacterMovement enemyMovement;
 	private CharacterAnimation enemyAnimation;
@@ -73,10 +74,10 @@ public class EnemyController : MonoBehaviour, IKillable
 
 			//enabled = false;
         }
-		else if (distance > 30)
-		{
-			enemyMovement.Movement(transform.position);
-		}
+		//else if (distance > 30)
+		//{
+		//	enemyMovement.Movement(transform.position);
+		//}
 		else if (distance > 3f) 
 		{
 		
@@ -129,8 +130,12 @@ public class EnemyController : MonoBehaviour, IKillable
 	public void LoseHealth(int damage)
 	{
 		enemyStatus.health -= damage;
-
-		if (enemyStatus.health <= 0)
+        if (outLine.eraseRenderer)
+        {
+            outLine.eraseRenderer = false;          
+        }
+        StartCoroutine(UnOutline());
+        if (enemyStatus.health <= 0)
 		{
 			DamageN(.5f, "100");
 			Die();
@@ -138,8 +143,13 @@ public class EnemyController : MonoBehaviour, IKillable
 		else
 			DamageN(1.5f, "50");
 	}
-
-	public void Die() {
+    IEnumerator UnOutline()
+    {
+        yield return new WaitForSeconds(.1f);
+        outLine.eraseRenderer = true;
+ 
+    }
+    public void Die() {
 		//Destroy(gameObject, 1.5f);
 		StartCoroutine(Dying());
 		enemyAnimation.Die();
@@ -189,7 +199,7 @@ public class EnemyController : MonoBehaviour, IKillable
 		if (!closeEnough)
 		{
 			direction = randomPosition - transform.position;
-			enemyMovement.Movement(direction, enemyStatus.speed);
+			enemyMovement.Movement(direction);
 		}
 	}
 

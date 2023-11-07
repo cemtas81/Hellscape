@@ -1962,7 +1962,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  fDistance: 150
+  fDistance: 125
   MinAngle: 360
   MaxAngle: 45
   StartAngle: 45
@@ -5651,7 +5651,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  fDistance: 350
+  fDistance: 320
   MinAngle: 360
   MaxAngle: 45
   StartAngle: 45
@@ -7667,7 +7667,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  fDistance: 250
+  fDistance: 220
   MinAngle: 360
   MaxAngle: 45
   StartAngle: 45

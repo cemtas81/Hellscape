@@ -68265,7 +68265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radialMenu: {fileID: 3242956905225026077}
-  key: 105
+  key: 279
   sprites:
   - {fileID: 21300000, guid: d1388989a58466f43a4518eb914bc489, type: 3}
   - {fileID: 21300000, guid: 90cd3f1a41207bf4ca6065528825b024, type: 3}
@@ -108364,6 +108364,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6737837514016000371}
     m_Modifications:
+    - target: {fileID: 890349953, guid: f6269a18c0287664eb6fded4e5627daf, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 890349953, guid: f6269a18c0287664eb6fded4e5627daf, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120010151, guid: f6269a18c0287664eb6fded4e5627daf, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120010151, guid: f6269a18c0287664eb6fded4e5627daf, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4457954431373287174, guid: f6269a18c0287664eb6fded4e5627daf,
         type: 3}
       propertyPath: aim
