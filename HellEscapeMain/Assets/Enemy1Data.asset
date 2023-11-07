@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655a0136c8dbab448bdb206c0b9df096, type: 3}
+  m_Name: Enemy1Data
+  m_EditorClassIdentifier: 
+  sharedMeshRenderer: {fileID: 837393742077323248, guid: 7c119eaea4c9da340862188734b8c98b,
+    type: 3}
+  sharedAnimator: {fileID: 22100000, guid: a022412376948e34680bc38603cd2cfa, type: 2}
+  sharedAvatar: {fileID: 9000000, guid: 1c8e2f8120da7de4db6e971a8d94a22b, type: 3}
+  sharedAgent: {fileID: 0}
+  sharedMaterial: {fileID: 0}
+  sharedAudioClip: {fileID: 0}
+  sharedHitClip: {fileID: 0}
+  timeBetweenAttacks: 0
+  attackDamage: 0

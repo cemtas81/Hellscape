@@ -57,7 +57,6 @@ public class EnemyController : MonoBehaviour, IKillable
     }
 	void FixedUpdate () {
 
-		// get the distance between this enemy and the player
 		float distance = Vector3.Distance(transform.position, player.transform.position);
 		if (direction != Vector3.zero&&agent==null)
 		{
@@ -112,7 +111,7 @@ public class EnemyController : MonoBehaviour, IKillable
 	}
 	
 	/// <summary>
-	/// Attacks the player, causing a random damage between 20 and 30.
+	/// Attacks the player, causing a random damage between 5 and 10.
 	/// </summary>
 	void AttackPlayer () {
 		int damage = Random.Range(5, 10);
@@ -150,7 +149,7 @@ public class EnemyController : MonoBehaviour, IKillable
  
     }
     public void Die() {
-		//Destroy(gameObject, 1.5f);
+		
 		StartCoroutine(Dying());
 		enemyAnimation.Die();
 	    enemyMovement.Die();

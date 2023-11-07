@@ -150,7 +150,7 @@ public class MySolidSpawner : MonoBehaviour
         prefabToSpawn.SetActive(true);
 
         float jumpDistance = 3f;
-        float jumpDuration = 1f;
+        float jumpDuration = .5f;
 
         // Calculate the target position for the jump
         Vector3 jumpTarget = prefabToSpawn.transform.position + prefabToSpawn.transform.forward * jumpDistance;

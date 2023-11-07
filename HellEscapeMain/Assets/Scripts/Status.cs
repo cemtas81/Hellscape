@@ -1,15 +1,35 @@
 ﻿using UnityEngine;
 
-public class Status : MonoBehaviour {
+public class Status : MonoBehaviour 
+{
 
-	public int initialHealth = 100;
+    public PrefabData enemyData;
+    public int initialHealth = 100;
 	[HideInInspector] public int health;
 	public float speed = 5;
-
-	// Use this for initialization
-	void Awake ()
+    Animator anim;
+    // Use this for initialization
+    void Awake ()
 	{
-		health = initialHealth;
-	}
+        anim = GetComponent<Animator>();
+        health = initialHealth;
+        if (enemyData != null)
+        {
+            SkinnedMeshRenderer smr = GetComponentInChildren<SkinnedMeshRenderer>();
+            if (smr != null)
+            {
+                smr.sharedMesh = enemyData.sharedMeshRenderer.sharedMesh;
+               
+            }
+
+            if (anim != null)
+            {
+                anim.runtimeAnimatorController = enemyData.sharedAnimator;
+                anim.avatar = enemyData.sharedAvatar;
+                anim.cullingMode = AnimatorCullingMode.CullCompletely;
+            }
+
+        }
+    }
 		
 }
