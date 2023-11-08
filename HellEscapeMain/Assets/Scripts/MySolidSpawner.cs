@@ -23,7 +23,7 @@ public class MySolidSpawner : MonoBehaviour
     public float spawnIntervalBoss;  
     public bool BossHere;
     private ObjectPooling2 pool;
-
+    public Transform[] spawnPoints;
     void Start()
     {
         pool = ObjectPooling2.Shared;
@@ -161,52 +161,72 @@ public class MySolidSpawner : MonoBehaviour
 
     public void Spawn4()
     {
-       
         GameObject prefab;
         float randomValue = Random.value;
-        if (randomValue <= 0.60f) // 60% probability
-        {
-            prefab = pool.GetPooledObject(PrefabType.Prefab2);
-        }
-        else if (randomValue <= 0.9f) // 25% probability
-        {
-            prefab = pool.GetPooledObject(PrefabType.Prefab3);
-        }
-        else if (randomValue <= 0.98f) // 10% probability
-        {
-            prefab = pool.GetPooledObject(PrefabType.Prefab4);
-        }
-        else // 5% probability
-        {
-            prefab = pool.GetPooledObject(PrefabType.Prefab2);
 
-        }
-        if (prefab == null) return;
-        if (spawnedPrefabs.Count >= maxActivePrefabs)
+        // Create a list to store active spawn points
+        List<Transform> activeSpawnPoints = new List<Transform>();
+
+        foreach (Transform spawnPoint in spawnPoints)
         {
-            return;
-        }
-        float angle = Random.Range(0f, 360f);
-        float x = movableObject.transform.position.x + desiredCircleRadius * Mathf.Cos(angle);
-        float z = movableObject.transform.position.z + desiredCircleRadius * Mathf.Sin(angle);
-        Vector3 position = new Vector3(x, 0, z);
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(position, out hit, desiredCircleRadius, NavMesh.AllAreas))
-        {
-            prefab.transform.SetPositionAndRotation(hit.position, Quaternion.Euler(0, angle, 0));
-            prefab.SetActive(true);
+            if (spawnPoint.gameObject.activeSelf)
+            {
+                activeSpawnPoints.Add(spawnPoint);
+            }
         }
 
+        if (activeSpawnPoints.Count > 0)
+        {
+            if (randomValue <= 0.60f) // 60% probability
+            {
+                prefab = pool.GetPooledObject(PrefabType.Prefab2);
+            }
+            else if (randomValue <= 0.9f) // 25% probability
+            {
+                prefab = pool.GetPooledObject(PrefabType.Prefab3);
+            }
+            else if (randomValue <= 0.98f) // 10% probability
+            {
+                prefab = pool.GetPooledObject(PrefabType.Prefab4);
+            }
+            else // 5% probability
+            {
+                prefab = pool.GetPooledObject(PrefabType.Prefab2);
+            }
+
+            if (prefab == null) return;
+
+            if (spawnedPrefabs.Count >= maxActivePrefabs)
+            {
+                return;
+            }
+
+            // Select a random active spawn point
+            Transform selectedSpawnPoint = activeSpawnPoints[Random.Range(0, activeSpawnPoints.Count)];
+
+            float angle = Random.Range(0f, 360f);
+            float x = selectedSpawnPoint.position.x + desiredCircleRadius * Mathf.Cos(angle);
+            float z = selectedSpawnPoint.position.z + desiredCircleRadius * Mathf.Sin(angle);
+            Vector3 position = new Vector3(x, 0, z);
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(position, out hit, desiredCircleRadius, NavMesh.AllAreas))
+            {
+                prefab.transform.SetPositionAndRotation(hit.position, Quaternion.Euler(0, angle, 0));
+                prefab.SetActive(true);
+            }
+        }
     }
+
     public void BossSpawn()
     {
         
         GameObject prefab = pool.GetPooledObject(PrefabType.Prefab5); 
 
         float angle = Random.Range(0f, 360f);
-        float x = movableObject.transform.position.x + desiredCircleRadius * Mathf.Cos(angle);
+        float x = movableObject.transform.position.x + desiredCircleRadius*15 * Mathf.Cos(angle);
         float y = movableObject.transform.position.y;
-        float z = movableObject.transform.position.z + desiredCircleRadius * Mathf.Sin(angle);
+        float z = movableObject.transform.position.z + desiredCircleRadius*15 * Mathf.Sin(angle);
         Vector3 position = new Vector3(x, 0, z);
         prefab.transform.SetPositionAndRotation(position, Quaternion.identity);
         prefab.SetActive(true);

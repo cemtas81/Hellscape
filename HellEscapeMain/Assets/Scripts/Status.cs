@@ -8,14 +8,16 @@ public class Status : MonoBehaviour
 	[HideInInspector] public int health;
 	public float speed = 5;
     Animator anim;
+    SkinnedMeshRenderer smr;
     // Use this for initialization
     void Awake ()
 	{
         anim = GetComponent<Animator>();
         health = initialHealth;
+        smr = GetComponentInChildren<SkinnedMeshRenderer>();
         if (enemyData != null)
         {
-            SkinnedMeshRenderer smr = GetComponentInChildren<SkinnedMeshRenderer>();
+           
             if (smr != null)
             {
                 smr.sharedMesh = enemyData.sharedMeshRenderer.sharedMesh;
