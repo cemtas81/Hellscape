@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 	public ItemMover cursorAim;
 	public Outline outLine;
 	private bool hitted;
-
+	Camera cam;
 	private void Awake()
 	{
 		myController1=new MyController();
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 		//zone = GetComponent<StarterAssetsInputs>();
 		weapon = FindObjectOfType<MainWeapon>();
         weaponController = FindObjectOfType<WeaponController>();
+		cam = SharedVariables.Instance.cam;
     }
 	private void OnEnable()
 	{
@@ -93,10 +94,14 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 		playerAnimation.Movement(direction.ToIso().magnitude);
 	}		
 	void FixedUpdate () {
-		// moves the player by second using physics
-		// use physics (rigidbody) to compute the player movement is better than transform.position 
-		// because prevents the player to "bug" when colliding with other objects
-		playerMovement.Movement(direction.ToIso(), playerStatus.speed);
+        // moves the player by second using physics
+        // use physics (rigidbody) to compute the player movement is better than transform.position 
+        // because prevents the player to "bug" when colliding with other objects
+        direction = cam.transform.TransformDirection(direction);
+        direction.y = 0;
+        // Normalize the movement vector and make it proportional to the speed per second.
+        direction = direction.normalized;
+        playerMovement.Movement(direction, playerStatus.speed);
 		if (arrowHolder.activeInHierarchy!=true)
 		{
             playerMovement.PlayerRotation(groundMask);

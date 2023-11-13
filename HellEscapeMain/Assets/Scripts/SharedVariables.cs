@@ -31,7 +31,7 @@ public class SharedVariables : MonoBehaviour
     public Transform axeAim;
     public CinemachineVirtualCamera cam2;
     public Light sceneLight;
-   
+    public Camera cam;
    
     public GameObject EffectSlider, musicSlider;
  
@@ -107,7 +107,7 @@ public class SharedVariables : MonoBehaviour
         //sceneLight = FindObjectOfType<Light>();
         //EffectSlider = GameObject.FindGameObjectWithTag("Effects");
         //musicSlider = GameObject.FindGameObjectWithTag("Music");
-
+        cam = Camera.main;
         //ammoHold = GameObject.FindGameObjectWithTag("AmmoHold").GetComponent<MeshRenderer>();
         //GunShots = GameObject.FindGameObjectWithTag("EnemyGunShots").GetComponent<AudioSource>();
     }

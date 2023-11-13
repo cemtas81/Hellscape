@@ -43183,6 +43183,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 517925894893022674, guid: 45a2b0840d0364a459f6bfaecccb604c,
         type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 2045995842}
+    - target: {fileID: 517925894893022674, guid: 45a2b0840d0364a459f6bfaecccb604c,
+        type: 3}
       propertyPath: pool
       value: 
       objectReference: {fileID: 0}
