@@ -142,7 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemySpawner: {fileID: 0}
   deathSound: {fileID: 8300000, guid: e21dd81695caab5499b47b785a6960d5, type: 3}
-  aidKit: {fileID: 1060151288946202, guid: 6150c6f66b7034ec5b3672478195682a, type: 3}
+  aidKit: {fileID: 8465422779184186619, guid: 7e1be29d687fc9a479fa9c54a6c1473a, type: 3}
   bloodParticle: {fileID: 1824713313622334221}
   outLine: {fileID: 5788083711859404143}
   numberPrefab: {fileID: 1584410138532935668, guid: 1850c5272b1fc6b4783cc9c41329ef05,

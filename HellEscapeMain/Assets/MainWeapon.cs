@@ -58,6 +58,7 @@ public class MainWeapon :MonoBehaviour
     void Devilish()
     {
         devilCam.SetActive(true);
+        DoSpell3();
     }
     void NewSkillTree()
     {

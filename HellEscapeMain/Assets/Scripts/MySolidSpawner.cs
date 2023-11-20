@@ -122,14 +122,14 @@ public class MySolidSpawner : MonoBehaviour
         {
             prefabToSpawn = pool.GetPooledObject(PrefabType.Prefab0);
         }
-        else if (randomValue <= 0.99f) // Next 6% probability
+        else  // Next 7% probability
         {
             prefabToSpawn = pool.GetPooledObject(PrefabType.Prefab1);
         }
-        else // Remaining 1% probability
-        {
-            prefabToSpawn = pool.GetPooledObject(PrefabType.Prefab6);
-        }
+        //else // Remaining 1% probability
+        //{
+        //    prefabToSpawn = pool.GetPooledObject(PrefabType.Prefab6);
+        //}
         if (prefabToSpawn == null) return;
 
         // Define the range for the random offset

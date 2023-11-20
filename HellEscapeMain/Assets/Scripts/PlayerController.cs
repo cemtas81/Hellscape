@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 
 	[HideInInspector]public Status playerStatus;
 	[SerializeField] private LayerMask groundMask;
-	[SerializeField] private ScreenController screenController;
+	public ScreenController screenController;
 	[SerializeField] private AudioClip damageSound;
 	//public StarterAssetsInputs zone;
 	private Vector3 direction;
@@ -35,13 +35,14 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 		//zone = GetComponent<StarterAssetsInputs>();
 		weapon = FindObjectOfType<MainWeapon>();
         weaponController = FindObjectOfType<WeaponController>();
-		cam = SharedVariables.Instance.cam;
+        cam = SharedVariables.Instance.cam;
     }
 	private void OnEnable()
 	{
 		myController1.Enable();
 		action1 = myController1.MyGameplay.MoveCursor;
-	}
+       
+    }
 	private void OnDisable()
 	{
 		myController1.Disable();
@@ -86,22 +87,28 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 
 		// creates a Vector3 with the new direction
 		direction = new Vector3 (xAxis, 0, zAxis);
-		float velocityZ=Vector3.Dot(direction.ToIso().normalized,transform.forward);
-		float velocityX = Vector3.Dot(direction.ToIso().normalized, transform.right);
+		if (cam != null)
+		{
+			direction = cam.transform.TransformDirection(direction);
+		}
+
+		direction.y = 0;
+        // Normalize the movement vector and make it proportional to the speed per second.
+        direction = direction.normalized;
+        float velocityZ=Vector3.Dot(direction.normalized,transform.forward);
+		float velocityX = Vector3.Dot(direction.normalized, transform.right);
 		playerAnimation.VelocityZ(velocityZ);
 		playerAnimation.VelocityX(velocityX);
 		// player animations transition
-		playerAnimation.Movement(direction.ToIso().magnitude);
+		playerAnimation.Movement(direction.magnitude);
+
 	}		
 	void FixedUpdate () {
-        // moves the player by second using physics
-        // use physics (rigidbody) to compute the player movement is better than transform.position 
-        // because prevents the player to "bug" when colliding with other objects
-        direction = cam.transform.TransformDirection(direction);
-        direction.y = 0;
-        // Normalize the movement vector and make it proportional to the speed per second.
-        direction = direction.normalized;
-        playerMovement.Movement(direction, playerStatus.speed);
+		// moves the player by second using physics
+		// use physics (rigidbody) to compute the player movement is better than transform.position 
+		// because prevents the player to "bug" when colliding with other objects
+		
+		playerMovement.Movement(direction, playerStatus.speed);
 		if (arrowHolder.activeInHierarchy!=true)
 		{
             playerMovement.PlayerRotation(groundMask);
@@ -172,35 +179,9 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 		screenController.UpdateHealthSlider();
     }
 
-    public void Spell(int weapon)
-    {		
-        weaponController.enabled = true;
-        // Deactivate all upgrades
-        upgrade1.SetActive(false);
-        upgrade2.SetActive(false);
-        upgrade3.SetActive(false);
-        upgrade4.SetActive(false);
-        upgrade5.SetActive(false);
-
-        // Enable the specific upgrade based on the weapon value
-        switch (weapon)
-        {
-            case 0:
-                upgrade1.SetActive(true);                       
-                break;
-            case 1:
-                upgrade2.SetActive(true);
-                break;
-            case 2:
-                upgrade3.SetActive(true);
-                break;
-            case 3:
-                upgrade4.SetActive(true);
-                break;
-            case 4:
-                upgrade5.SetActive(true);
-                break;
-        }
+    public void Spell(int weapon1)
+    {
+		weapon.spell1 = upgrade2;
     }
 
 }

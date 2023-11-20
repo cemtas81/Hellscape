@@ -8,7 +8,7 @@ public class EnemyController : MonoBehaviour, IKillable
 {
 
 	[HideInInspector] public EnemySpawner EnemySpawner;
-	
+	//public bool wizard;
 	[SerializeField] private AudioClip deathSound;
 	[SerializeField] private GameObject aidKit;
 	[SerializeField] private ParticleSystem bloodParticle;
@@ -23,7 +23,7 @@ public class EnemyController : MonoBehaviour, IKillable
 	private Vector3 direction;
 	private float rollingCounter;
 	private float randomPositionTime = 4;
-	private float probabilityAidKit = .05f;
+	private float probabilityAidKit = .03f;
     private MySolidSpawner Parent;
 	public DamageNumber numberPrefab;
 	private NavMeshAgent agent;
