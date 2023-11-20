@@ -116,7 +116,7 @@ public class MySolidSpawner : MonoBehaviour
         float randomValue = Random.value;
         if (randomValue <= 0.78f) // 78% probability
         {
-            Debug.Log("No spawn");
+            //Debug.Log("No spawn");
         }
         else if (randomValue <= 0.93f) // Next 15% probability
         {
