@@ -3,6 +3,7 @@ using Pathfinding;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IKillable, ICurable {
 
@@ -10,8 +11,9 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 	[SerializeField] private LayerMask groundMask;
 	public ScreenController screenController;
 	[SerializeField] private AudioClip damageSound;
-	//public StarterAssetsInputs zone;
-	private Vector3 direction;
+    [SerializeField] private Camera cam;
+    //public StarterAssetsInputs zone;
+    private Vector3 direction;
 	private PlayerMovement playerMovement;
 	private CharacterAnimation playerAnimation;
 	[SerializeField] private GameObject upgrade1,upgrade2,upgrade3,upgrade4,upgrade5,upgradePanel,sword,Bhole,arrowHolder;	
@@ -25,7 +27,8 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 	public ItemMover cursorAim;
 	public Outline outLine;
 	private bool hitted;
-	Camera cam;
+   
+	
 	private void Awake()
 	{
 		myController1=new MyController();
@@ -35,8 +38,9 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 		//zone = GetComponent<StarterAssetsInputs>();
 		weapon = FindObjectOfType<MainWeapon>();
         weaponController = FindObjectOfType<WeaponController>();
-        cam = SharedVariables.Instance.cam;
+       
     }
+	
 	private void OnEnable()
 	{
 		myController1.Enable();
@@ -46,7 +50,8 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 	private void OnDisable()
 	{
 		myController1.Disable();
-	} 
+       
+    } 
     void Update () 
     {
         if (weaponController.gameObject.activeInHierarchy != true)
