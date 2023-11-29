@@ -65,7 +65,7 @@ public class EnemyController : MonoBehaviour, IKillable
 		}
 
 		enemyAnimation.Movement(direction.magnitude*5);
-        if (distance > 60)
+        if (distance > 100)
         {
             
 			//Destroy(gameObject);
