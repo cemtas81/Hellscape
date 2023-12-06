@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.AI;
 public class BossCont2 : MonoBehaviour, IKillable
 {
 
@@ -18,8 +18,9 @@ public class BossCont2 : MonoBehaviour, IKillable
     private float probabilityupgrade = .5f;
     private ScreenController screenController;
     private Collider coll;
-    private bool dead;
-    private void OnEnable()
+    public bool dead;
+    private NavMeshAgent agent;
+    private void Awake()
     {
         coll = GetComponent<Collider>();
         player = SharedVariables.Instance.playa.transform;
@@ -28,6 +29,11 @@ public class BossCont2 : MonoBehaviour, IKillable
         Parent = SharedVariables.Instance.spawner;
         bossAnimation = GetComponent<CharacterAnimation>();
         bossMovement = GetComponent<CharacterMovement>();
+        agent=GetComponent<NavMeshAgent>(); 
+    }
+    private void OnEnable()
+    {
+        
         Parent.BossHere = true;       
         screenController.ShowBossText();
         UpdateInterface();
@@ -37,6 +43,10 @@ public class BossCont2 : MonoBehaviour, IKillable
         sliderImage.color = Color.green;
         coll.enabled = true;
         dead = false;
+        if (agent!=null)
+        {
+            agent.enabled=true;
+        }
     }
     private void OnDisable()
     {
@@ -49,37 +59,42 @@ public class BossCont2 : MonoBehaviour, IKillable
             // get the distance between this enemy and the player
             float distance = Vector3.Distance(transform.position, player.transform.position);
 
-            if (direction != Vector3.zero)
+            if (direction != Vector3.zero&&agent==null)
             {
                 bossMovement.Rotation(direction);
             }
             bossAnimation.Movement(direction.magnitude * 5);
-            if (distance > 60)
+       
+            if (distance > 3.5f)
             {
-                Parent.spawnedPrefabs.Remove(this.gameObject);
-                //Destroy(gameObject);
-                this.gameObject.SetActive(false);
+                if (agent != null)
+                {
+                    direction = player.transform.position;
+                    bossMovement.Movement(direction);
+                }
+                else
+                {
+                    // the distance between the enemy and the player
+                    direction = player.transform.position - transform.position;
 
-                //enabled = false;
-            }
-            //      else if (distance > 30) 
-            //{
-            //	Rolling();
-            //} 
-            else if (distance > 3.5f)
-            {
-
-                // the distance between the enemy and the player
-                direction = player.transform.position - transform.position;
-
-                bossMovement.Movement(direction, bossStatus.speed);
-
+                    bossMovement.Movement(direction, bossStatus.speed);
+                }
+                
                 // if they're not colliding the Attacking animation is off
                 bossAnimation.Attack(false);
             }
             else
             {
-                direction = player.transform.position - transform.position;
+                if (agent != null)
+                {
+                    direction = player.transform.position;
+                   
+                }
+                else
+                {
+                    direction = player.transform.position - transform.position;
+                }
+              
                 // otherwise, the Attacking animation is on
                 bossAnimation.Attack(true);
             }
@@ -112,6 +127,10 @@ public class BossCont2 : MonoBehaviour, IKillable
         Instantiate(aidKitPrefab, transform.position+Vector3.up, Quaternion.identity);
         //enabled = false;
         InstantiateUpgrade(probabilityupgrade);
+        if (agent!=null)
+        {
+          agent.enabled = false;    
+        }
     }
     IEnumerator Dying()
     {

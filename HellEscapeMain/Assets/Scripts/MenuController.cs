@@ -2,18 +2,24 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
+using TMPro;
+using System.Collections.Generic;
 
 public class MenuController : MonoBehaviour {
 
 	[SerializeField] private GameObject quitButton;
 	MyController actions;
-	
+	public AudioMixer audioMixer;
 	public GameObject optionsPanel,creditsPanel,quitPanel, storyPanel, controlPanel;
 	public GameObject StartFirstB,optionsFirstB;
+	Resolution[] resolutions;
+	public TMP_Dropdown resolutionDropdown;
+	private int currentResIndex = 0;
     // Use this for initialization
     private void Awake()
 	{
-		EventSystem.current.SetSelectedGameObject(StartFirstB);
+		
 		actions=new MyController();
 		actions.MyGameplay.Submit.started+=sbm=>SubmitAct();
        
@@ -32,8 +38,25 @@ public class MenuController : MonoBehaviour {
 //#if UNITY_STANDALONE || UNITY_EDITOR
 //		quitButton.SetActive(true);
 //#endif
-Time.timeScale = 1.0f;
-	}
+        Time.timeScale = 1.0f;
+        EventSystem.current.SetSelectedGameObject(StartFirstB);
+        resolutions = Screen.resolutions;
+        resolutionDropdown.ClearOptions();
+
+        List<string> options = new List<string>();
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            string option = resolutions[i].width + "x" + resolutions[i].height;
+            options.Add(option);
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            {
+                currentResIndex = i;
+            }
+        }
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResIndex;
+        resolutionDropdown.RefreshShownValue();
+    }
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
@@ -48,6 +71,23 @@ Time.timeScale = 1.0f;
             }
 
         }
+	}
+	public void SetResolution(int resIndex)
+	{
+		Resolution resolution = resolutions[resIndex];
+		Screen.SetResolution(resolution.width,resolution.height,Screen.fullScreen);
+	}
+	public void SetVolume(float volume)
+	{
+		audioMixer.SetFloat("volume",volume);
+	}
+	public void SetQuality(int qualityIndex)
+	{
+		QualitySettings.SetQualityLevel(qualityIndex);	
+	}
+	public void SetFullscreen(bool isFullscreen)
+	{
+		Screen.fullScreen=isFullscreen;
 	}
 	public void Back()
 	{

@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 114177387312464070}
   - component: {fileID: 989150403}
   - component: {fileID: 8855595977202330857}
+  - component: {fileID: 4131925647519510907}
   m_Layer: 9
   m_Name: BossChef2
   m_TagString: Boss
@@ -121,8 +122,8 @@ Rigidbody:
   m_GameObject: {fileID: 1063500868937916}
   serializedVersion: 2
   m_Mass: 50
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: Infinity
+  m_AngularDrag: Infinity
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -164,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 080af7d2cd924144c9ef6683b1d38ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyData: {fileID: 0}
   initialHealth: 30
   health: 0
   speed: 9
@@ -188,6 +190,7 @@ MonoBehaviour:
   sliderImage: {fileID: 114289610940135242}
   maxHealthColor: {r: 0.45116335, g: 0.9716981, b: 0.09625311, a: 1}
   minHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  dead: 0
 --- !u!114 &8855595977202330857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +208,28 @@ MonoBehaviour:
   shotSound: {fileID: 8300000, guid: 70b6e007003158e4fa167f9b0a084a77, type: 3}
   shootInterval: 2
   Level: 0
+--- !u!195 &4131925647519510907
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063500868937916}
+  m_Enabled: 1
+  m_AgentTypeID: 1479372276
+  m_Radius: 1.2
+  m_Speed: 8
+  m_Acceleration: 8
+  avoidancePriority: 1
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 5
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 1
 --- !u!1 &1065480718027956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,7 +1280,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

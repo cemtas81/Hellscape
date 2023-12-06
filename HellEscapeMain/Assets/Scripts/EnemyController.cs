@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour, IKillable
 	private NavMeshAgent agent;
 	private Collider coll;
 	private Rigidbody rb;
-	private void OnEnable()
+	private void Awake()
 	{
         enemyMovement = GetComponent<CharacterMovement>();
         enemyAnimation = GetComponent<CharacterAnimation>();
@@ -37,11 +37,15 @@ public class EnemyController : MonoBehaviour, IKillable
         screenController = SharedVariables.Instance.screenCont;
         Parent = SharedVariables.Instance.spawner;
         player = SharedVariables.Instance.playa;
-		coll=GetComponent<Collider>();
-		rb=GetComponent<Rigidbody>();
+        coll = GetComponent<Collider>();
+        rb = GetComponent<Rigidbody>();
         //GetRandomEnemy();
-        Parent.spawnedPrefabs.Add(this.gameObject);		
+        Parent.spawnedPrefabs.Add(this.gameObject);
         agent = GetComponent<NavMeshAgent>();
+    }
+	private void OnEnable()
+	{
+       
 		if (agent!=null)
 		{
             agent.enabled = true;
@@ -185,22 +189,22 @@ public class EnemyController : MonoBehaviour, IKillable
 			Instantiate(aidKit, transform.position+Vector3.up, Quaternion.identity);
 	}
 
-	private void Rolling()
-	{
-		rollingCounter -= Time.deltaTime;
-		if (rollingCounter <= 0)
-		{
-			randomPosition = GetRandomPosition();
-			rollingCounter += randomPositionTime + Random.Range(-1f, 1f);
-		}
+	//private void Rolling()
+	//{
+	//	rollingCounter -= Time.deltaTime;
+	//	if (rollingCounter <= 0)
+	//	{
+	//		randomPosition = GetRandomPosition();
+	//		rollingCounter += randomPositionTime + Random.Range(-1f, 1f);
+	//	}
 
-		bool closeEnough = Vector3.Distance(transform.position, randomPosition) <= 10;
-		if (!closeEnough)
-		{
-			direction = randomPosition - transform.position;
-			enemyMovement.Movement(direction);
-		}
-	}
+	//	bool closeEnough = Vector3.Distance(transform.position, randomPosition) <= 10;
+	//	if (!closeEnough)
+	//	{
+	//		direction = randomPosition - transform.position;
+	//		enemyMovement.Movement(direction);
+	//	}
+	//}
 
 	private Vector3 GetRandomPosition()
 	{
