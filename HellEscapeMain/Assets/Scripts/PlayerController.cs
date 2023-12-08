@@ -114,11 +114,11 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
 		// because prevents the player to "bug" when colliding with other objects
 		
 		playerMovement.Movement(direction, playerStatus.speed);
-		if (arrowHolder.activeInHierarchy!=true)
+		if (arrowHolder.activeInHierarchy != true)
 		{
-            playerMovement.PlayerRotation(groundMask);
-        }
-	
+			playerMovement.PlayerRotation(groundMask);
+		}
+
 	}
 	/// <summary>
 	/// Loses health based on the damage value. 

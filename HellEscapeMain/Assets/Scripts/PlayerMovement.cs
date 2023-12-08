@@ -5,18 +5,18 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : CharacterMovement {
     
-    //public StarterAssetsInputs joy;
+
     public GameObject pad;
     [SerializeField] private float range;
     public Vector3 target;
     public float speed = 2.0f,turnSpeed, nextUpdate;
-    private Quaternion qTo;
+
     private Camera m_camera;
     public Transform aim;
     public Texture2D texture,texture2;
     private void Start()
     {
-        qTo = transform.rotation;
+  
         m_camera = Camera.main; 
 
     }
@@ -75,47 +75,15 @@ public class PlayerMovement : CharacterMovement {
         if (gamepad == null)
         {
 
-            //Ray ray = m_camera.ScreenPointToRay(Input.mousePosition);
-            //if (Physics.Raycast(ray, out RaycastHit hit, 100, groundMask))
-            //{
-            //    Debug.DrawLine(hit.point, hit.normal);
-            //    //Vector3 positionPoint = Vector3.Slerp(transform.position, hit.point - transform.position, turnSpeed * Time.deltaTime);
-            //    Vector3 positionPoint = hit.point - transform.position;
-            //    //Change y position to trans.pos.y for smooth terrain 
-            //    positionPoint.y = 0;
-            //    //joy.cursorInputForLook = false;
-
-            //    //pad.SetActive(false);
-            //    Rotation(positionPoint);
-            //    target = positionPoint;
-
-
-            //    if (hit.collider.gameObject.CompareTag("Enemy") || hit.collider.gameObject.CompareTag("Boss"))
-            //    {
-            //        Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
-            //    }
-            //    else
-            //    {
-            //        Cursor.SetCursor(texture2, Vector2.zero, CursorMode.Auto);
-            //    }
-
-            //}
-
             Vector3 mousePosition = Input.mousePosition;
             Ray ray = m_camera.ScreenPointToRay(mousePosition);
 
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundMask))
             {
-                //Debug.DrawLine(hit.point, hit.normal);
-
-                Vector3 adjustedPosition = transform.position.ToIso();
-                Vector3 directionToHit = hit.point.ToIso() - adjustedPosition;
-                Quaternion cameraRotation = Quaternion.Euler(m_camera.transform.eulerAngles);
-                Vector3 adjustedDirection = cameraRotation * directionToHit;
-
-                Vector3 positionPoint = adjustedDirection.normalized.ToIso() * directionToHit.magnitude;
-                positionPoint.y = 0;
-                Rotation(positionPoint);
+            
+                Vector3 positionPoint=hit.point-transform.position;
+                positionPoint.y = 0;               
+                Rotation(positionPoint.normalized);
                 target = positionPoint;
 
                 if (hit.collider.gameObject.CompareTag("Enemy") || hit.collider.gameObject.CompareTag("Boss"))
@@ -132,14 +100,7 @@ public class PlayerMovement : CharacterMovement {
 
         else if (gamepad.rightStick.IsActuated(0F))
         {
-            //joy.cursorInputForLook = true;
-            //Vector3 direction = new Vector3(joy.look.x, 0, joy.look.y * -1);
-            //qTo = Quaternion.LookRotation(direction);
-            //Quaternion smoothdir = Quaternion.Slerp(transform.rotation, qTo, speed * Time.deltaTime);
-            ////transform.rotation = Quaternion.Slerp(transform.rotation, qTo, speed * Time.deltaTime);
-            ////for character movement                    
-            //Rotation(smoothdir);
-            //joy.cursorInputForLook = true;
+
             Vector3 positionPoint = aim.position - transform.position;
            
             positionPoint.y = 0;
