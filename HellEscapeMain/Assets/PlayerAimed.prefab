@@ -546,6 +546,105 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1273355272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1273355273}
+  - component: {fileID: 1273355274}
+  - component: {fileID: 1273355275}
+  m_Layer: 0
+  m_Name: playerDot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1273355273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273355272}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5802079440834966334}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!212 &1273355274
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273355272}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 094bfbcd00ee0044cb4c938f03653dee, type: 3}
+  m_Color: {r: 0.98589355, g: 0.990566, b: 0.98589355, a: 0}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &1273355275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273355272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  eraseRenderer: 0
 --- !u!1 &1331216021
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,8 +1042,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 1972416396677200233, guid: fbb1b25880c34b54e83eec814cfd8d6e, type: 3}
+  spell1: {fileID: 0}
+  spell2: {fileID: 0}
+  spell3: {fileID: 0}
+  charSkill: {fileID: 0}
+  skillTree: {fileID: 0}
+  devilCam: {fileID: 0}
   shotSound: {fileID: 8300000, guid: 11f9432fd9e94894883da7801527a8f0, type: 3}
   attacking: 0
+  key: 304
 --- !u!1 &776062940024792428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1955,7 +2061,7 @@ GameObject:
   - component: {fileID: 4116345941491898513}
   - component: {fileID: 8030896862953971987}
   - component: {fileID: 3451145722354225246}
-  - component: {fileID: 8354799180100449273}
+  - component: {fileID: 356875909}
   m_Layer: 10
   m_Name: PlayerAimed
   m_TagString: Player
@@ -1988,6 +2094,7 @@ Transform:
   - {fileID: 5808363743013127452}
   - {fileID: 2139005812}
   - {fileID: 274651659}
+  - {fileID: 1273355273}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2033,7 +2140,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5806248661436214868}
   serializedVersion: 2
-  m_Mass: 1000
+  m_Mass: 9999
   m_Drag: 0.01
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -2059,6 +2166,7 @@ MonoBehaviour:
     m_Bits: 768
   screenController: {fileID: 0}
   damageSound: {fileID: 8300000, guid: 015a6c6498c72324ca0fd6fdae62b1da, type: 3}
+  cam: {fileID: 0}
   upgrade1: {fileID: 776062940024792428}
   upgrade2: {fileID: 0}
   upgrade3: {fileID: 0}
@@ -2090,12 +2198,12 @@ MonoBehaviour:
   pad: {fileID: 0}
   range: 10
   target: {x: 0, y: 0, z: 0}
-  speed: 15
+  speed: 200
   turnSpeed: 10
   nextUpdate: 0
   aim: {fileID: 0}
-  texture: {fileID: 2800000, guid: 138be2c51d9c27c48992c4d4961e24c2, type: 3}
-  texture2: {fileID: 2800000, guid: 56f8165bc8b0a98419e06f018a808c4c, type: 3}
+  texture: {fileID: 0}
+  texture2: {fileID: 0}
 --- !u!114 &5837417857097937878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2120,9 +2228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 080af7d2cd924144c9ef6683b1d38ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyData: {fileID: 0}
   initialHealth: 500
   health: 0
-  speed: 10
+  speed: 12
 --- !u!114 &4116345941491898513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2219,7 +2328,7 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5806248661436214868}
   m_Enabled: 1
---- !u!208 &8354799180100449273
+--- !u!208 &356875909
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4240,6 +4349,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FarClipPlane
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 119000011232808150, guid: 7f50943bcfa49c6468106129efcad4b3,
+        type: 3}
+      propertyPath: m_Orthographic
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 119000011232808150, guid: 7f50943bcfa49c6468106129efcad4b3,
         type: 3}
