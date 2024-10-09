@@ -187,24 +187,24 @@ public class RopeContactAttachment : RopeContact
         if (Rigidbody == null) return;
         Vector3 attachmentVector = Vector3.Lerp(LowAttachmentVector, HighAttachmentVector, vectorLerp);
         //Vector3 dampenedVelocity = Vector3.Lerp(contact.rb.velocity, Vector3.ProjectOnPlane(contact.rb.velocity, contact.contactVector), tensionDamping);
-        Vector3 velocity = Rigidbody.velocity;
+        Vector3 velocity = Rigidbody.linearVelocity;
         float velcoityMagnitude = velocity.magnitude;
         Vector3 tempAV = attachmentVector;
         Vector3.OrthoNormalize(ref tempAV, ref velocity);
         Vector3 tangentVelocity = velocity * velcoityMagnitude;
         //Debug.DrawRay(contact.rb.position, tangentVelocity, Color.blue);
         //float t = 1 - Mathf.Abs(Vector3.Dot(contact.contactVector, contact.rb.velocity.normalized));
-        float t = -Vector3.Dot(attachmentVector, Rigidbody.velocity.normalized);
+        float t = -Vector3.Dot(attachmentVector, Rigidbody.linearVelocity.normalized);
         t = t < 0 ? 0 : 1 - t;
-        tangentVelocity = Vector3.Lerp(Vector3.ProjectOnPlane(Rigidbody.velocity, attachmentVector), tangentVelocity, t);
+        tangentVelocity = Vector3.Lerp(Vector3.ProjectOnPlane(Rigidbody.linearVelocity, attachmentVector), tangentVelocity, t);
         //Debug.DrawRay(contact.rb.position, tangentVelocity * 3, Color.black);
 
-        Vector3 dampenedVelocity = Vector3.Lerp(Rigidbody.velocity, tangentVelocity, strength); // strength here was initially called tension damping
+        Vector3 dampenedVelocity = Vector3.Lerp(Rigidbody.linearVelocity, tangentVelocity, strength); // strength here was initially called tension damping
         //Debug.DrawRay(Rigidbody.position, dampenedVelocity.normalized * 2, Color.blue);
         //Debug.DrawRay(contact.rb.position, dampenedVelocity, Color.green);
         //Debug.Log("limit: " + Rigidbody.position + " force: " + dampenedVelocity);
 
-        Rigidbody.velocity = dampenedVelocity;
+        Rigidbody.linearVelocity = dampenedVelocity;
     }
 
     public override void ApplyForce(float strength, float vectorLerp, float timeStep)

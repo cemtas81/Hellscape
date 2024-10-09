@@ -36,8 +36,8 @@ public class PlayerController : MonoBehaviour, IKillable, ICurable {
         playerAnimation = GetComponent<CharacterAnimation>();
         playerStatus = GetComponent<Status>();
 		//zone = GetComponent<StarterAssetsInputs>();
-		weapon = FindObjectOfType<MainWeapon>();
-        weaponController = FindObjectOfType<WeaponController>();
+		weapon = FindFirstObjectByType<MainWeapon>();
+        weaponController = FindFirstObjectByType<WeaponController>();
        
     }
 	
