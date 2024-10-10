@@ -9,7 +9,7 @@ public class RewardSword : MonoBehaviour
     private ScreenController screen;
     private void Start()
     {
-        screen=SharedVariables.Instance.screenCont;
+        screen = SharedVariables.Instance.screenCont;
         transform.DORotate(rotationAngle, duration, RotateMode.FastBeyond360)
            .SetEase(Ease.Linear)
            .SetLoops(-1, LoopType.Incremental);

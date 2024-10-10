@@ -1,4 +1,4 @@
-using Pathfinding;
+//using Pathfinding;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,7 +21,7 @@ public class BarbCont2 : MonoBehaviour, IKillable, ICurable
     private bool canShoot, canThrow,dead;  
     MyController myController; 
     public GamePadCursorController joyAim;
-    public TargetMover cursorAim;
+    //public TargetMover cursorAim;
     private InputAction action;
     private void Awake()
     {   
@@ -49,13 +49,13 @@ public class BarbCont2 : MonoBehaviour, IKillable, ICurable
         if (gamepad != null)
         {
             joyAim.enabled = true;
-            cursorAim.enabled = false;
+            //cursorAim.enabled = false;
             Cursor.visible = false;
         }
         else
         {
             joyAim.enabled = false;
-            cursorAim.enabled = true;
+            //cursorAim.enabled = true;
             Cursor.visible = true;
 
         }

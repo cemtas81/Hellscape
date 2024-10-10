@@ -231,7 +231,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 5fdb9bb7efbafab40a2c1ad62ba20ef4, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: f7bbf9d7e72d8f94b8906739e61a5d52, type: 2}
 --- !u!1 &252460532
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,7 +911,7 @@ PrefabInstance:
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.931175
+      value: 11.461175
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
@@ -984,7 +984,7 @@ PrefabInstance:
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.931175
+      value: 11.461175
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8,
         type: 3}
@@ -1239,7 +1239,7 @@ PrefabInstance:
     - target: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.99
+      value: 7.52
       objectReference: {fileID: 0}
     - target: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544,
         type: 3}
@@ -1463,6 +1463,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6137195408660175650, guid: b46460f1bbbc12748b60dcdabbcb01e5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6901367268439504431, guid: b46460f1bbbc12748b60dcdabbcb01e5,
         type: 3}
       propertyPath: m_IsActive
@@ -1471,6 +1476,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 114046604457125844, guid: b46460f1bbbc12748b60dcdabbcb01e5, type: 3}
     - {fileID: 114447579211330046, guid: b46460f1bbbc12748b60dcdabbcb01e5, type: 3}
+    - {fileID: 114948108573447626, guid: b46460f1bbbc12748b60dcdabbcb01e5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
