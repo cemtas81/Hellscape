@@ -10,7 +10,7 @@ using Unity.Burst;
 
 public class EnemyController : MonoBehaviour, IKillable
 {
-    private enum EnemyState { Idle, Chasing, Attacking, Dying, KickReward }
+    public enum EnemyState { Idle, Chasing, Attacking, Dying, KickReward }
 
     [HideInInspector] public EnemySpawner EnemySpawner;
     [SerializeField] private AudioClip deathSound;
@@ -18,7 +18,8 @@ public class EnemyController : MonoBehaviour, IKillable
     [SerializeField] private ParticleSystem bloodParticle;
     public Outline outLine;
     public DamageNumber numberPrefab;
-
+    private GameObject targetObject;
+    public Detector detector;
     private Status enemyStatus;
     private GameObject player;
     private CharacterMovement enemyMovement;
@@ -27,11 +28,13 @@ public class EnemyController : MonoBehaviour, IKillable
     private NavMeshAgent agent;
     private Collider coll;
     private Rigidbody rb;
-    private EnemyState currentState;
+    public EnemyState currentState;
     private Vector3 direction;
-    private float probabilityAidKit = 0.03f,distance;
+    private float probabilityAidKit = 0.03f, distance;
     private MySolidSpawner Parent;
     private CancellationTokenSource cancellationTokenSource;
+   
+    Camera cam;
     [BurstCompile]
     public struct DistanceJob : IJob
     {
@@ -55,41 +58,31 @@ public class EnemyController : MonoBehaviour, IKillable
         coll = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
-
-        Parent.spawnedPrefabs.Add(this.gameObject);
-
+        cam = SharedVariables.Instance.cam;
     }
-    private void Start()
-    {
-        cancellationTokenSource = new CancellationTokenSource();
-        StartStateHandling(cancellationTokenSource.Token).Forget();
-    }
+
     private void OnEnable()
     {
-
+        cancellationTokenSource = new CancellationTokenSource();
+        Parent.spawnedPrefabs.Add(this.gameObject);
         if (agent != null) agent.enabled = true;
         rb.isKinematic = false;
         enemyStatus.health = enemyStatus.initialHealth;
         coll.enabled = true;
-        ChangeState(EnemyState.Idle);
-        StartStateHandling(cancellationTokenSource.Token).Forget();
+        currentState = EnemyState.Idle;
+        _=StartStateHandling(cancellationTokenSource.Token);
     }
 
     private void OnDisable()
     {
         cancellationTokenSource.Cancel();
         cancellationTokenSource.Dispose();
-        cancellationTokenSource = new CancellationTokenSource();
+        //cancellationTokenSource = new CancellationTokenSource();
         Parent.spawnedPrefabs.Remove(this.gameObject);
     }
 
-    private async UniTaskVoid StartStateHandling(CancellationToken token)
+    private async UniTask StartStateHandling(CancellationToken token)
     {
-        //while (!token.IsCancellationRequested)
-        //{
-        //    HandleState();
-        //    await UniTask.Yield(PlayerLoopTiming.FixedUpdate, token);
-        //}
         NativeArray<float> distanceResult = new(1, Allocator.Persistent); // Change to Persistent allocator
 
         try
@@ -101,7 +94,7 @@ public class EnemyController : MonoBehaviour, IKillable
                 // Schedule the distance calculation job
                 DistanceJob distanceJob = new()
                 {
-                    playerPosition = player.transform.position,
+                    playerPosition = targetObject != null ? targetObject.transform.position : player.transform.position,
                     enemyPosition = transform.position,
                     result = distanceResult
                 };
@@ -114,18 +107,16 @@ public class EnemyController : MonoBehaviour, IKillable
 
                 // Update the movement based on the calculated distance
                 HandleState();
-                await UniTask.Yield(PlayerLoopTiming.FixedUpdate, token);
-
+                //await UniTask.Yield(PlayerLoopTiming.FixedUpdate, token);
             }
         }
-
         finally
         {
             distanceResult.Dispose(); // Ensure the NativeArray is disposed in the finally block
         }
     }
 
-    private void ChangeState(EnemyState newState)
+    public void ChangeState(EnemyState newState)
     {
         currentState = newState;
         switch (newState)
@@ -143,19 +134,19 @@ public class EnemyController : MonoBehaviour, IKillable
                 enemyAnimation.Attack(false);
                 break;
             case EnemyState.Dying:
-                DyingRoutineAsync(cancellationTokenSource.Token).Forget();
+                _=DyingRoutineAsync(cancellationTokenSource.Token);
                 break;
+
         }
     }
 
     private void HandleState()
     {
-        //float distance = Vector3.Distance(transform.position, player.transform.position);
 
         switch (currentState)
         {
             case EnemyState.Idle:
-                if (distance < 100f)
+                if (targetObject == null)
                     ChangeState(EnemyState.Chasing);
                 break;
 
@@ -177,33 +168,101 @@ public class EnemyController : MonoBehaviour, IKillable
                 }
                 else
                 {
-                    Attack();
+                    if (targetObject == null)
+                    {
+                        Attack();
+                    }
+
                 }
+                break;
+
+            case EnemyState.KickReward:
+                if (detector.detected)
+                {
+                    if (distance <= 3f)
+                    {
+                        KickTarget();
+                    }
+                    else
+                    {
+                        MoveTowardsTarget();
+                    }
+                }
+
                 break;
 
             case EnemyState.Dying:
                 break;
         }
     }
+    private void KickTarget()
+    {
+        if (targetObject != null)
+        {
+            enemyAnimation.Kicko(true);
+        }
+        else
+            enemyAnimation.Kicko(false);
+    }
+    public void Kick()
+    {
+        if (detector.Reward.TryGetComponent(out Rigidbody rbt))
+        {
+            rbt.isKinematic = false;
+            rbt.AddForce((cam.transform.position - transform.position).normalized * 75f, ForceMode.Impulse);
+        }
+        targetObject = null;
+        _=KickRoutineAsync(cancellationTokenSource.Token);
+    }
+
+    private async UniTask KickRoutineAsync(CancellationToken token)
+    {
+
+        await UniTask.Delay(1000, cancellationToken: token);
+        detector.Reward.SetActive(false);
+
+    }
+    public void MoveOn()
+    {
+
+        enemyAnimation.Kicko(false); ChangeState(EnemyState.Chasing);
+        MoveTowardsPlayer();
+    }
     private void Attack()
     {
+
         direction = player.transform.position;
         direction.y = transform.position.y;
         transform.LookAt(direction);
+    }
+    private void MoveTowardsTarget()
+    {
+
+        if (detector != null)
+        {
+            targetObject = detector.Reward;
+        }
+        if (targetObject != null)
+        {
+            direction = targetObject.transform.position - transform.position;
+            direction.y = 0;
+
+            if (agent.enabled)
+            {
+                agent.SetDestination(targetObject.transform.position);
+            }
+
+            enemyAnimation.Movement(direction.magnitude * 5);
+        }
     }
     private void MoveTowardsPlayer()
     {
         direction = player.transform.position - transform.position;
         direction.y = 0;
-
-        if (agent != null)
+        agent.enabled = true;
+        if (agent.enabled)
         {
             agent.SetDestination(player.transform.position);
-        }
-        else
-        {
-            enemyMovement.Movement(direction, enemyStatus.speed);
-            enemyMovement.Rotation(direction);
         }
 
         enemyAnimation.Movement(direction.magnitude * 5);
@@ -222,7 +281,7 @@ public class EnemyController : MonoBehaviour, IKillable
         if (outLine != null && outLine.eraseRenderer)
         {
             outLine.eraseRenderer = false;
-            UnOutlineAsync(cancellationTokenSource.Token).Forget();
+            _=UnOutlineAsync(cancellationTokenSource.Token);
         }
 
         if (enemyStatus.health <= 0)
@@ -236,13 +295,13 @@ public class EnemyController : MonoBehaviour, IKillable
         }
     }
 
-    private async UniTaskVoid UnOutlineAsync(CancellationToken token)
+    private async UniTask UnOutlineAsync(CancellationToken token)
     {
         await UniTask.Delay(100, cancellationToken: token);
         outLine.eraseRenderer = true;
     }
 
-    private async UniTaskVoid DyingRoutineAsync(CancellationToken token)
+    private async UniTask DyingRoutineAsync(CancellationToken token)
     {
         enemyAnimation.Die();
         enemyMovement.Die();
@@ -281,6 +340,6 @@ public class EnemyController : MonoBehaviour, IKillable
 
     public void Die()
     {
-        DyingRoutineAsync(cancellationTokenSource.Token).Forget();
+        _=DyingRoutineAsync(cancellationTokenSource.Token);
     }
 }
