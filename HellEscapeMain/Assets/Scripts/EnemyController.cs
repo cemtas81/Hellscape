@@ -200,10 +200,18 @@ public class EnemyController : MonoBehaviour, IKillable
         if (targetObject != null)
         {
             enemyAnimation.Kicko(true);
+            if (agent.enabled)
+            {
+                agent.isStopped = true; // Stop NavMeshAgent from moving
+            }
         }
         else
+        {
             enemyAnimation.Kicko(false);
+          
+        }
     }
+
     public void Kick()
     {
         if (detector.Reward.TryGetComponent(out Rigidbody rbt))
@@ -224,9 +232,13 @@ public class EnemyController : MonoBehaviour, IKillable
     }
     public void MoveOn()
     {
-
-        enemyAnimation.Kicko(false); ChangeState(EnemyState.Chasing);
-        MoveTowardsPlayer();
+        if (agent.enabled)
+        {
+            agent.isStopped = false; // Resume NavMeshAgent
+        }
+        enemyAnimation.Kicko(false);
+        //ChangeState(EnemyState.Chasing);
+        //MoveTowardsPlayer();
     }
     private void Attack()
     {

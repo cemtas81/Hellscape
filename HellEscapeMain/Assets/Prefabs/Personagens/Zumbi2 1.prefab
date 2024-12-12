@@ -169,6 +169,8 @@ MonoBehaviour:
   outLine: {fileID: 5788083711859404143}
   numberPrefab: {fileID: 1584410138532935668, guid: 1850c5272b1fc6b4783cc9c41329ef05,
     type: 3}
+  detector: {fileID: 0}
+  currentState: 0
 --- !u!114 &114948108573447626
 MonoBehaviour:
   m_ObjectHideFlags: 0
