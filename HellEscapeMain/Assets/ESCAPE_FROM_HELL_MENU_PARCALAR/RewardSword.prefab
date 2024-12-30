@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 8465422779184186622}
   - component: {fileID: 8465422779184186617}
   - component: {fileID: 8465422779184186616}
-  - component: {fileID: -982711671040706347}
-  - component: {fileID: -3760975045757626242}
+  - component: {fileID: 5008654060457967721}
   m_Layer: 0
   m_Name: RewardSword
   m_TagString: Reward
@@ -71,8 +70,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationAngle: {x: 0, y: 360, z: 0}
   duration: 1
---- !u!135 &-982711671040706347
-SphereCollider:
+--- !u!136 &5008654060457967721
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -89,36 +88,11 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.8
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &-3760975045757626242
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8465422779184186619}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  serializedVersion: 2
+  m_Radius: 0.20605941
+  m_Height: 1.8043027
+  m_Direction: 1
+  m_Center: {x: -0.061555106, y: 0.005373241, z: -9.414969e-10}
 --- !u!1001 &8465422779218918491
 PrefabInstance:
   m_ObjectHideFlags: 0

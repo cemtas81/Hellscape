@@ -30,7 +30,7 @@ public class BossController : MonoBehaviour, IKillable{
 
 	private void Update() {
 		agent.SetDestination(player.position);
-		bossAnimation.Movement(agent.velocity.magnitude);
+		bossAnimation.Movemento(agent.velocity.magnitude);
 
 		if (agent.hasPath) {
 			bool closeToPlayer = agent.remainingDistance <= agent.stoppingDistance;

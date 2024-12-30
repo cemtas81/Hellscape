@@ -78,7 +78,7 @@ public class BarbEnemyCont : MonoBehaviour, IKillable
             enemyMovement.Rotation(direction);
         }
 
-        enemyAnimation.Movement(direction.magnitude * 5);
+        enemyAnimation.Movemento(direction.magnitude * 5);
         if (distance > 60)
         {
             Parent.spawnedPrefabs.Remove(this.gameObject);
@@ -100,7 +100,7 @@ public class BarbEnemyCont : MonoBehaviour, IKillable
             // checks if enemy and player are not colliding.
             // The 2.5f is because both enemy and player have a Capsule Collider with radius equal 1,
             // so if the distance is bigger than both radius they are colliding
-            enemyMovement.Movement(direction, enemyStatus.speed);
+            enemyMovement.Movemento(direction, enemyStatus.speed);
 
             // if they're not colliding the Attacking animation is off
             enemyAnimation.Attack(false);

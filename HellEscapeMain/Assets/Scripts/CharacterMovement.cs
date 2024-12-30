@@ -13,7 +13,7 @@ public class CharacterMovement : MonoBehaviour {
 		
 	} 
 	
-	public void Movement (Vector3 direction, float speed) {
+	public void Movemento (Vector3 direction, float speed) {
 	
 		myRigidbody.MovePosition (myRigidbody.position + (speed * Time.deltaTime * direction.normalized));
 	}

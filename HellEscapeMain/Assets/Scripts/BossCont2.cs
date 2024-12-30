@@ -63,7 +63,7 @@ public class BossCont2 : MonoBehaviour, IKillable
             {
                 bossMovement.Rotation(direction);
             }
-            bossAnimation.Movement(direction.magnitude * 5);
+            bossAnimation.Movemento(direction.magnitude * 5);
        
             if (distance > 3.5f)
             {
@@ -77,7 +77,7 @@ public class BossCont2 : MonoBehaviour, IKillable
                     // the distance between the enemy and the player
                     direction = player.transform.position - transform.position;
 
-                    bossMovement.Movement(direction, bossStatus.speed);
+                    bossMovement.Movemento(direction, bossStatus.speed);
                 }
                 
                 // if they're not colliding the Attacking animation is off

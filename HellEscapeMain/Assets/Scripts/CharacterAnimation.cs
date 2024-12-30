@@ -29,7 +29,7 @@ public class CharacterAnimation : MonoBehaviour {
 		animator.SetBool(_kickTrigger,state);
 	}
 	
-	public void Movement (float value) {
+	public void Movemento (float value) {
 
 		animator.SetFloat(_runTrigger, value,0.1f,Time.deltaTime);
 

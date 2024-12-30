@@ -27,7 +27,7 @@ public class SharedVariables : MonoBehaviour
     
     public MainWeapon weaponController;
     public AudioSource audioS, Effects, GunShots;
-
+    public CrackCam crackCam;
     public Transform axeAim;
     public CinemachineVirtualCamera cam2;
     public Light sceneLight;
@@ -88,15 +88,16 @@ public class SharedVariables : MonoBehaviour
     }
     public void RefreshVariables()
     {
-        plyrmvmnt = FindObjectOfType<PlayerMovement>();
+        plyrmvmnt = FindFirstObjectByType<PlayerMovement>();
         playa = plyrmvmnt.gameObject;
         //Phealth = playa.GetComponent<PlayerHealth>();
         sword = GameObject.FindGameObjectWithTag("boomerang");
         swordIm = sword.GetComponent<MeshRenderer>();
-        screenCont = FindObjectOfType<ScreenController>();
-        spawner = FindObjectOfType<MySolidSpawner>();
-        pool =FindObjectOfType<ObjectPooling2>();
-        weaponController = FindObjectOfType<MainWeapon>();
+        screenCont = FindFirstObjectByType<ScreenController>();
+        spawner = FindFirstObjectByType<MySolidSpawner>();
+        pool =FindFirstObjectByType<ObjectPooling2>();
+        weaponController = FindFirstObjectByType<MainWeapon>();
+        crackCam = FindFirstObjectByType<CrackCam>();
         //audioS = FindObjectOfType<AudioSource>();
         //Effects = playa.GetComponent<AudioSource>();
         //Ammo = GameObject.FindGameObjectWithTag("Spear");

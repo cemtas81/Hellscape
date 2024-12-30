@@ -7,8 +7,9 @@ using cakeslice;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Burst;
+using DG.Tweening;
 
-public class EnemyController : MonoBehaviour, IKillable
+public class EnemyController :MonoBehaviour, IKillable
 {
     public enum EnemyState { Idle, Chasing, Attacking, Dying, KickReward }
 
@@ -33,8 +34,9 @@ public class EnemyController : MonoBehaviour, IKillable
     private float probabilityAidKit = 0.03f, distance;
     private MySolidSpawner Parent;
     private CancellationTokenSource cancellationTokenSource;
-   
+    private GameObject camCrack;
     Camera cam;
+
     [BurstCompile]
     public struct DistanceJob : IJob
     {
@@ -59,6 +61,7 @@ public class EnemyController : MonoBehaviour, IKillable
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
         cam = SharedVariables.Instance.cam;
+        camCrack = SharedVariables.Instance.crackCam.gameObject;
     }
 
     private void OnEnable()
@@ -70,7 +73,8 @@ public class EnemyController : MonoBehaviour, IKillable
         enemyStatus.health = enemyStatus.initialHealth;
         coll.enabled = true;
         currentState = EnemyState.Idle;
-        _=StartStateHandling(cancellationTokenSource.Token);
+        targetObject = null;
+        _ = StartStateHandling(cancellationTokenSource.Token);
     }
 
     private void OnDisable()
@@ -89,7 +93,7 @@ public class EnemyController : MonoBehaviour, IKillable
         {
             while (!token.IsCancellationRequested)
             {
-                await UniTask.Yield(PlayerLoopTiming.Update, token);
+                await UniTask.Yield(PlayerLoopTiming.FixedUpdate, token);
 
                 // Schedule the distance calculation job
                 DistanceJob distanceJob = new()
@@ -148,6 +152,8 @@ public class EnemyController : MonoBehaviour, IKillable
             case EnemyState.Idle:
                 if (targetObject == null)
                     ChangeState(EnemyState.Chasing);
+                else
+                    ChangeState(EnemyState.KickReward); 
                 break;
 
             case EnemyState.Chasing:
@@ -179,7 +185,7 @@ public class EnemyController : MonoBehaviour, IKillable
             case EnemyState.KickReward:
                 if (detector.detected)
                 {
-                    if (distance <= 3f)
+                    if (distance <= 2f)
                     {
                         KickTarget();
                     }
@@ -214,22 +220,23 @@ public class EnemyController : MonoBehaviour, IKillable
 
     public void Kick()
     {
-        if (detector.Reward.TryGetComponent(out Rigidbody rbt))
-        {
-            rbt.isKinematic = false;
-            rbt.AddForce((cam.transform.position - transform.position).normalized * 75f, ForceMode.Impulse);
-        }
+        
+        detector.Reward.transform.DOMove(camCrack.transform.position, 0.5f)
+            .SetEase(Ease.InOutCirc)
+            .OnComplete(() =>
+            {
+                if (!camCrack.activeSelf)
+                {
+                    detector.Reward.SetActive(false);
+                    camCrack.SetActive(true);
+                    
+                }
+            });
         targetObject = null;
-        _=KickRoutineAsync(cancellationTokenSource.Token);
+
+        //_ = KickRoutineAsync(cancellationTokenSource.Token);
     }
 
-    private async UniTask KickRoutineAsync(CancellationToken token)
-    {
-
-        await UniTask.Delay(1000, cancellationToken: token);
-        detector.Reward.SetActive(false);
-
-    }
     public void MoveOn()
     {
         if (agent.enabled)
@@ -264,20 +271,20 @@ public class EnemyController : MonoBehaviour, IKillable
                 agent.SetDestination(targetObject.transform.position);
             }
 
-            enemyAnimation.Movement(direction.magnitude * 5);
+            enemyAnimation.Movemento(direction.magnitude * 5);
         }
     }
     private void MoveTowardsPlayer()
     {
         direction = player.transform.position - transform.position;
         direction.y = 0;
-        agent.enabled = true;
+
         if (agent.enabled)
         {
             agent.SetDestination(player.transform.position);
         }
 
-        enemyAnimation.Movement(direction.magnitude * 5);
+        enemyAnimation.Movemento(direction.magnitude * 5);
     }
 
     private void AttackPlayer()
